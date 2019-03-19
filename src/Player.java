@@ -1,10 +1,14 @@
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PGraphics;
+
 import java.util.ArrayList;
 
 public class Player extends AnimatedSpriteObject {
 
-    private final int size = 25;
+    final int size = 25;
+    int currentFrame = 0;
+    float rotatiehoek = 0;
     private final ShooterApp world;
 
     private int currentFrame;
@@ -14,7 +18,7 @@ public class Player extends AnimatedSpriteObject {
     private final int walkingSpeed = 4;
 
     public Player(ShooterApp world) {
-        super(new Sprite("media/human.png"), 8);
+        super(new Sprite("media/human.png"), 16);
         this.world = world;
         setFriction(0);
 
@@ -46,7 +50,7 @@ public class Player extends AnimatedSpriteObject {
             setySpeed(0);
             setY(world.height - size);
         }
-
+      
         for (Key key : keys) {
             if (key.isPressed() && !keysPressed.contains(key)) {
                 keysPressed.add(key);
@@ -54,7 +58,6 @@ public class Player extends AnimatedSpriteObject {
                 keysPressed.remove(key);
             }
         }
-
         // update frames van player sprite
         setCurrentFrameIndex(currentFrame);
 
@@ -65,6 +68,7 @@ public class Player extends AnimatedSpriteObject {
             stopPlayer();
             currentFrame = 0;
         }
+
     }
 
     @Override
@@ -84,7 +88,10 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
-    public void loopFrames() {
+    public void loopFramesRight() {
+        if(currentFrame > 7) {
+            currentFrame = 0;
+        }
         if (currentFrame == 7) {
             currentFrame = 0;
         } else {
@@ -122,6 +129,17 @@ public class Player extends AnimatedSpriteObject {
             }
         }
         return false;
+    }
+  
+    public void loopFramesLeft() {
+        if(currentFrame < 8) {
+            currentFrame = 8;
+        }
+        if(currentFrame == 15 ) {
+            currentFrame = 8;
+        } else {
+            currentFrame ++;
+        }
     }
 
 }
