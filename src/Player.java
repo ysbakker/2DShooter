@@ -38,7 +38,7 @@ public class Player extends AnimatedSpriteObject {
             setySpeed(0);
             setY(world.height - size);
         }
-
+        setCurrentFrameIndex(currentFrame);
     }
 
     @Override
@@ -46,14 +46,14 @@ public class Player extends AnimatedSpriteObject {
         final int speed = 5;
         if (keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
-            setCurrentFrameIndex(loopFrames());
+            loopFrames();
         }
         if (keyCode == world.UP) {
             setDirectionSpeed(0, speed);
         }
         if (keyCode == world.RIGHT) {
             setDirectionSpeed(90, speed);
-            setCurrentFrameIndex(loopFrames());
+            loopFrames();
         }
         if (keyCode == world.DOWN) {
             setDirectionSpeed(180, speed);
@@ -66,30 +66,28 @@ public class Player extends AnimatedSpriteObject {
     public void keyReleased(int keyCode, char key) {
         if (keyCode == world.LEFT) {
             setDirectionSpeed(270, 0);
-            setCurrentFrameIndex(0);
+            currentFrame = 0;
         }
         if (keyCode == world.UP) {
             setDirectionSpeed(0, 0);
-            setCurrentFrameIndex(0);
+            currentFrame = 0;
         }
         if (keyCode == world.RIGHT) {
             setDirectionSpeed(90, 0);
-            setCurrentFrameIndex(0);
+            currentFrame = 0;
         }
         if (keyCode == world.DOWN) {
             setDirectionSpeed(180, 0);
-            setCurrentFrameIndex(0);
+            currentFrame = 0;
         }
     }
 
-    public int loopFrames() {
+    public void loopFrames() {
         if (currentFrame == 7) {
             currentFrame = 0;
         } else {
             currentFrame++;
         }
-
-        return currentFrame;
     }
 }
 
