@@ -1,10 +1,12 @@
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PGraphics;
 
 public class Player extends AnimatedSpriteObject {
 
     final int size = 25;
     int currentFrame = 0;
+    float rotatiehoek = 0;
 
     private final ShooterApp world;
 
@@ -14,7 +16,7 @@ public class Player extends AnimatedSpriteObject {
      * @param world Referentie naar de wereld
      */
     public Player(ShooterApp world) {
-        super(new Sprite("media/human.png"), 8);
+        super(new Sprite("media/human.png"), 16);
         this.world = world;
         setCurrentFrameIndex(0);
         setFriction(0);
@@ -46,14 +48,14 @@ public class Player extends AnimatedSpriteObject {
         final int speed = 5;
         if (keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
-            loopFrames();
+            loopFramesLeft();
         }
         if (keyCode == world.UP) {
             setDirectionSpeed(0, speed);
         }
         if (keyCode == world.RIGHT) {
             setDirectionSpeed(90, speed);
-            loopFrames();
+            loopFramesRight();
         }
         if (keyCode == world.DOWN) {
             setDirectionSpeed(180, speed);
@@ -66,7 +68,6 @@ public class Player extends AnimatedSpriteObject {
     public void keyReleased(int keyCode, char key) {
         if (keyCode == world.LEFT) {
             setDirectionSpeed(270, 0);
-            currentFrame = 0;
         }
         if (keyCode == world.UP) {
             setDirectionSpeed(0, 0);
@@ -82,12 +83,27 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
-    public void loopFrames() {
+    public void loopFramesRight() {
+        if(currentFrame > 7) {
+            currentFrame = 0;
+        }
         if (currentFrame == 7) {
             currentFrame = 0;
         } else {
             currentFrame++;
         }
     }
+
+    public void loopFramesLeft() {
+        if(currentFrame < 8) {
+            currentFrame = 8;
+        }
+        if(currentFrame == 15 ) {
+            currentFrame = 8;
+        } else {
+            currentFrame ++;
+        }
+    }
+
 }
 
