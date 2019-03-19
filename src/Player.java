@@ -23,7 +23,7 @@ public class Player extends AnimatedSpriteObject {
         setFriction(0);
 
         currentFrame = 0;
-        facing = 1;
+        facing = 0;
 
         // Gebruikte toetsen
         keys.add(new Key('w'));
@@ -72,6 +72,7 @@ public class Player extends AnimatedSpriteObject {
         } else {
             stopPlayer();
             currentFrame = 0;
+            facing = 0;
         }
 
     }
@@ -90,17 +91,6 @@ public class Player extends AnimatedSpriteObject {
             if (key == keyr.getKeyCode()) {
                 keyr.release();
             }
-        }
-    }
-
-    public void loopFramesRight() {
-        if(currentFrame > 7) {
-            currentFrame = 0;
-        }
-        if (currentFrame == 7) {
-            currentFrame = 0;
-        } else {
-            currentFrame++;
         }
     }
 
@@ -136,6 +126,17 @@ public class Player extends AnimatedSpriteObject {
             }
         }
         return false;
+    }
+
+    public void loopFramesRight() {
+        if(currentFrame > 7) {
+            currentFrame = 0;
+        }
+        if (currentFrame == 7) {
+            currentFrame = 0;
+        } else {
+            currentFrame++;
+        }
     }
   
     public void loopFramesLeft() {
