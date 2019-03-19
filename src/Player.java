@@ -4,7 +4,7 @@ import nl.han.ica.oopg.objects.Sprite;
 public class Player extends AnimatedSpriteObject {
 
     final int size = 25;
-    int currentFrame = 0;
+    int currentFrame;
 
     private final ShooterApp world;
 
@@ -16,7 +16,7 @@ public class Player extends AnimatedSpriteObject {
     public Player(ShooterApp world) {
         super(new Sprite("media/human.png"), 8);
         this.world = world;
-        setCurrentFrameIndex(0);
+        currentFrame = 0;
         setFriction(0);
     }
 
