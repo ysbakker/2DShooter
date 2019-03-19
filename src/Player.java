@@ -13,9 +13,9 @@ public class Player extends AnimatedSpriteObject {
 
     private int currentFrame;
     private final ArrayList<Key> keys = new ArrayList<>();
-    private ArrayList<Key> keyspressed = new ArrayList<>();
+    private ArrayList<Key> keysPressed = new ArrayList<>();
 
-    private final int walkingSpeed = 5;
+    private final int walkingSpeed = 4;
 
     public Player(ShooterApp world) {
         super(new Sprite("media/human.png"), 16);
@@ -50,31 +50,25 @@ public class Player extends AnimatedSpriteObject {
             setySpeed(0);
             setY(world.height - size);
         }
-
+      
+        for (Key key : keys) {
+            if (key.isPressed() && !keysPressed.contains(key)) {
+                keysPressed.add(key);
+            } else if (!key.isPressed() && keysPressed.contains(key)) {
+                keysPressed.remove(key);
+            }
+        }
         // update frames van player sprite
         setCurrentFrameIndex(currentFrame);
 
-    @Override
-    public void keyPressed(int keyCode, char key) {
-        final int speed = 5;
-        if (keyCode == world.LEFT) {
-            setDirectionSpeed(270, speed);
-            loopFramesLeft();
+        if (isWalking()) {
+            loopFrames();
+            movePlayer();
+        } else {
+            stopPlayer();
+            currentFrame = 0;
         }
-        if (keyCode == world.UP) {
-            setDirectionSpeed(0, speed);
-        }
-        if (keyCode == world.RIGHT) {
-            setDirectionSpeed(90, speed);
-            loopFramesRight();
-        }
-        for (Key key : keys) {
-            if (key.isPressed() && !keyspressed.contains(key)) {
-                keyspressed.add(key);
-            } else if (!key.isPressed() && keyspressed.contains(key)) {
-                keyspressed.remove(key);
-            }
-        }
+
     }
 
     @Override
@@ -105,6 +99,38 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
+    public void movePlayer() {
+        stopPlayer();
+        for (Key key: keysPressed) {
+            if (key.getKeyCode() == 'a') {
+                setxSpeed(-walkingSpeed);
+            }
+            if (key.getKeyCode() == 'w') {
+                setySpeed(-walkingSpeed);
+            }
+            if (key.getKeyCode() == 's') {
+                setySpeed(walkingSpeed);
+            }
+            if (key.getKeyCode() == 'd') {
+                setxSpeed(walkingSpeed);
+            }
+        }
+    }
+
+    public void stopPlayer() {
+        setxSpeed(0);
+        setySpeed(0);
+    }
+
+    public boolean isWalking() {
+        for (Key key: keysPressed) {
+            if (key.getKeyCode() == 'a' || key.getKeyCode() == 'w' || key.getKeyCode() == 's' || key.getKeyCode() == 'd') {
+                return true;
+            }
+        }
+        return false;
+    }
+  
     public void loopFramesLeft() {
         if(currentFrame < 8) {
             currentFrame = 8;
