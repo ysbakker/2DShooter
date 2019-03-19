@@ -1,4 +1,4 @@
-out/*/*/*
+out/*
 *.log
 *.iml
 *.xml
