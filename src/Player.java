@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class Player extends AnimatedSpriteObject {
 
-    final int size = 25;
-    int currentFrame = 0;
-    float rotatiehoek = 0;
+    private final int size = 25;
     private final ShooterApp world;
 
+    // 'facing' geeft aan welke kant de speler op kijkt, 0 is naar rechts (default), 1 is naar links
+    private int facing;
     private int currentFrame;
     private final ArrayList<Key> keys = new ArrayList<>();
     private ArrayList<Key> keysPressed = new ArrayList<>();
@@ -23,6 +23,7 @@ public class Player extends AnimatedSpriteObject {
         setFriction(0);
 
         currentFrame = 0;
+        facing = 1;
 
         // Gebruikte toetsen
         keys.add(new Key('w'));
@@ -62,7 +63,11 @@ public class Player extends AnimatedSpriteObject {
         setCurrentFrameIndex(currentFrame);
 
         if (isWalking()) {
-            loopFrames();
+            if (facing == 0) {
+                loopFramesRight();
+            } else if (facing == 1) {
+                loopFramesLeft();
+            }
             movePlayer();
         } else {
             stopPlayer();
@@ -104,6 +109,7 @@ public class Player extends AnimatedSpriteObject {
         for (Key key: keysPressed) {
             if (key.getKeyCode() == 'a') {
                 setxSpeed(-walkingSpeed);
+                facing = 1;
             }
             if (key.getKeyCode() == 'w') {
                 setySpeed(-walkingSpeed);
@@ -113,6 +119,7 @@ public class Player extends AnimatedSpriteObject {
             }
             if (key.getKeyCode() == 'd') {
                 setxSpeed(walkingSpeed);
+                facing = 0;
             }
         }
     }
