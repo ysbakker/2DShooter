@@ -1,10 +1,14 @@
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
+import processing.core.PGraphics;
+
 import java.util.ArrayList;
 
 public class Player extends AnimatedSpriteObject {
 
-    private final int size = 25;
+    final int size = 25;
+    int currentFrame = 0;
+    float rotatiehoek = 0;
     private final ShooterApp world;
 
     private int currentFrame;
@@ -14,7 +18,7 @@ public class Player extends AnimatedSpriteObject {
     private final int walkingSpeed = 5;
 
     public Player(ShooterApp world) {
-        super(new Sprite("media/human.png"), 8);
+        super(new Sprite("media/human.png"), 16);
         this.world = world;
         setFriction(0);
 
@@ -50,19 +54,26 @@ public class Player extends AnimatedSpriteObject {
         // update frames van player sprite
         setCurrentFrameIndex(currentFrame);
 
+    @Override
+    public void keyPressed(int keyCode, char key) {
+        final int speed = 5;
+        if (keyCode == world.LEFT) {
+            setDirectionSpeed(270, speed);
+            loopFramesLeft();
+        }
+        if (keyCode == world.UP) {
+            setDirectionSpeed(0, speed);
+        }
+        if (keyCode == world.RIGHT) {
+            setDirectionSpeed(90, speed);
+            loopFramesRight();
+        }
         for (Key key : keys) {
             if (key.isPressed() && !keyspressed.contains(key)) {
                 keyspressed.add(key);
             } else if (!key.isPressed() && keyspressed.contains(key)) {
                 keyspressed.remove(key);
             }
-        }
-
-        System.out.println(keyspressed);
-        setDirectionSpeed(determineDirection(keyspressed), determineSpeed(keyspressed));
-
-        if (determineSpeed(keyspressed) > 0) {
-            loopFrames();
         }
     }
 
@@ -83,7 +94,10 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
-    public void loopFrames() {
+    public void loopFramesRight() {
+        if(currentFrame > 7) {
+            currentFrame = 0;
+        }
         if (currentFrame == 7) {
             currentFrame = 0;
         } else {
@@ -91,54 +105,15 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
-    public int determineDirection(ArrayList<Key> keys) {
-        int totalDirection = 0;
-        int walkingKeysPressed = 0;
-
-        for (Key key: keys) {
-            if (key.getKeyCode() == 'a') {
-                totalDirection += 270;
-                walkingKeysPressed++;
-            }
-            if (key.getKeyCode() == 'w') {
-                totalDirection += 360;
-                walkingKeysPressed++;
-            }
-            if (key.getKeyCode() == 's') {
-                totalDirection += 180;
-                walkingKeysPressed++;
-            }
-            if (key.getKeyCode() == 'd') {
-                totalDirection += 90;
-                walkingKeysPressed++;
-            }
+    public void loopFramesLeft() {
+        if(currentFrame < 8) {
+            currentFrame = 8;
         }
-
-        if (walkingKeysPressed == 0) {
-            return 0;
+        if(currentFrame == 15 ) {
+            currentFrame = 8;
         } else {
-            return totalDirection / walkingKeysPressed;
+            currentFrame ++;
         }
-    }
-
-    public int determineSpeed(ArrayList<Key> keys) {
-        int speed = 0;
-
-        for (Key key: keys) {
-            if (key.getKeyCode() == 'a') {
-                speed = walkingSpeed;
-            }
-            if (key.getKeyCode() == 'w') {
-                speed = walkingSpeed;
-            }
-            if (key.getKeyCode() == 's') {
-                speed = walkingSpeed;
-            }
-            if (key.getKeyCode() == 'd') {
-                speed = walkingSpeed;
-            }
-        }
-        return speed;
     }
 
 }
