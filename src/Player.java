@@ -9,9 +9,9 @@ public class Player extends AnimatedSpriteObject {
 
     private int currentFrame;
     private final ArrayList<Key> keys = new ArrayList<>();
-    private ArrayList<Key> keyspressed = new ArrayList<>();
+    private ArrayList<Key> keysPressed = new ArrayList<>();
 
-    private final int walkingSpeed = 5;
+    private final int walkingSpeed = 4;
 
     public Player(ShooterApp world) {
         super(new Sprite("media/human.png"), 8);
@@ -47,22 +47,23 @@ public class Player extends AnimatedSpriteObject {
             setY(world.height - size);
         }
 
-        // update frames van player sprite
-        setCurrentFrameIndex(currentFrame);
-
         for (Key key : keys) {
-            if (key.isPressed() && !keyspressed.contains(key)) {
-                keyspressed.add(key);
-            } else if (!key.isPressed() && keyspressed.contains(key)) {
-                keyspressed.remove(key);
+            if (key.isPressed() && !keysPressed.contains(key)) {
+                keysPressed.add(key);
+            } else if (!key.isPressed() && keysPressed.contains(key)) {
+                keysPressed.remove(key);
             }
         }
 
-        System.out.println(keyspressed);
-        setDirectionSpeed(determineDirection(keyspressed), determineSpeed(keyspressed));
+        // update frames van player sprite
+        setCurrentFrameIndex(currentFrame);
 
-        if (determineSpeed(keyspressed) > 0) {
+        if (isWalking()) {
             loopFrames();
+            movePlayer();
+        } else {
+            stopPlayer();
+            currentFrame = 0;
         }
     }
 
@@ -91,54 +92,36 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
-    public int determineDirection(ArrayList<Key> keys) {
-        int totalDirection = 0;
-        int walkingKeysPressed = 0;
-
-        for (Key key: keys) {
+    public void movePlayer() {
+        stopPlayer();
+        for (Key key: keysPressed) {
             if (key.getKeyCode() == 'a') {
-                totalDirection += 270;
-                walkingKeysPressed++;
+                setxSpeed(-walkingSpeed);
             }
             if (key.getKeyCode() == 'w') {
-                totalDirection += 360;
-                walkingKeysPressed++;
+                setySpeed(-walkingSpeed);
             }
             if (key.getKeyCode() == 's') {
-                totalDirection += 180;
-                walkingKeysPressed++;
+                setySpeed(walkingSpeed);
             }
             if (key.getKeyCode() == 'd') {
-                totalDirection += 90;
-                walkingKeysPressed++;
+                setxSpeed(walkingSpeed);
             }
-        }
-
-        if (walkingKeysPressed == 0) {
-            return 0;
-        } else {
-            return totalDirection / walkingKeysPressed;
         }
     }
 
-    public int determineSpeed(ArrayList<Key> keys) {
-        int speed = 0;
+    public void stopPlayer() {
+        setxSpeed(0);
+        setySpeed(0);
+    }
 
-        for (Key key: keys) {
-            if (key.getKeyCode() == 'a') {
-                speed = walkingSpeed;
-            }
-            if (key.getKeyCode() == 'w') {
-                speed = walkingSpeed;
-            }
-            if (key.getKeyCode() == 's') {
-                speed = walkingSpeed;
-            }
-            if (key.getKeyCode() == 'd') {
-                speed = walkingSpeed;
+    public boolean isWalking() {
+        for (Key key: keysPressed) {
+            if (key.getKeyCode() == 'a' || key.getKeyCode() == 'w' || key.getKeyCode() == 's' || key.getKeyCode() == 'd') {
+                return true;
             }
         }
-        return speed;
+        return false;
     }
 
 }
