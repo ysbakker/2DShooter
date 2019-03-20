@@ -1,6 +1,5 @@
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
-import processing.core.PGraphics;
 
 import java.util.ArrayList;
 
@@ -18,7 +17,7 @@ public class Player extends AnimatedSpriteObject {
     private final int walkingSpeed;
 
     public Player(ShooterApp world) {
-        super(new Sprite("media/human.png"), 16);
+        super(new Sprite("media/sprite_human.png"), 16);
         this.world = world;
         setFriction(0);
 
