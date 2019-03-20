@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Player extends AnimatedSpriteObject {
 
-    private final int size = 50;
+    private final int size;
     private final ShooterApp world;
 
     // 'facing' geeft aan welke kant de speler op kijkt, 0 is naar rechts (default), 1 is naar links
@@ -15,13 +15,15 @@ public class Player extends AnimatedSpriteObject {
     private final ArrayList<Key> keys = new ArrayList<>();
     private ArrayList<Key> keysPressed = new ArrayList<>();
 
-    private final int walkingSpeed = 4;
+    private final int walkingSpeed;
 
     public Player(ShooterApp world) {
         super(new Sprite("media/human.png"), 16);
         this.world = world;
         setFriction(0);
 
+        size = 50;
+        walkingSpeed = 4;
         currentFrame = 0;
         facing = 0;
 
