@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Player extends AnimatedSpriteObject {
 
-    private final int size = 25;
+    private final int size = 50;
     private final ShooterApp world;
 
     // 'facing' geeft aan welke kant de speler op kijkt, 0 is naar rechts (default), 1 is naar links
@@ -39,17 +39,17 @@ public class Player extends AnimatedSpriteObject {
             setxSpeed(0);
             setX(0);
         }
-        if (getY() <= 0) {
+        if (getY() <= 10) {
             setySpeed(0);
-            setY(0);
+            setY(10);
         }
         if (getX() >= world.width - size) {
             setxSpeed(0);
             setX(world.width - size);
         }
-        if (getY() >= world.height - size) {
+        if (getY() >= world.height - size - 25) {
             setySpeed(0);
-            setY(world.height - size);
+            setY(world.height - size - 25);
         }
       
         for (Key key : keys) {
