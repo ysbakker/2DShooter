@@ -1,7 +1,11 @@
+import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
-public abstract class Enemy extends AnimatedSpriteObject {
+import java.util.List;
+
+public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects {
 
     private ShooterApp world;
     private int currentFrame;
@@ -31,6 +35,19 @@ public abstract class Enemy extends AnimatedSpriteObject {
             currentFrame = 1;
         } else {
             currentFrame++;
+        }
+    }
+
+    @Override
+    public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+        for (GameObject g : collidedGameObjects) {
+            if (g instanceof Particle) {
+                System.out.println("Enemy died.");
+                world.deleteGameObject(this);
+            }
+            if (g instanceof Player) {
+                System.out.println("Enemy hit player!");
+            }
         }
     }
 }
