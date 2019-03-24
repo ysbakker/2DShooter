@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 public class ShooterApp extends GameEngine {
     private Player player;
+    private EnemySpawner enemySpawner;
 
     private int worldWidth;
     private int worldHeight;
@@ -25,6 +26,7 @@ public class ShooterApp extends GameEngine {
 
         createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
+        createEnemySpawner();
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -49,5 +51,9 @@ public class ShooterApp extends GameEngine {
 
     public int getWorldHeight() {
         return worldHeight;
+    }
+
+    public void createEnemySpawner() {
+        enemySpawner = new EnemySpawner(this, player, 1);
     }
 }
