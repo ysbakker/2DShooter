@@ -6,17 +6,11 @@ import nl.han.ica.oopg.objects.SpriteObject;
 import java.util.List;
 
 public class Particle extends SpriteObject implements ICollidableWithGameObjects {
-    ShooterApp world;
-    float xspawn;
-    float yspawn;
-    int[] direction;
+    private ShooterApp world;
 
     public Particle(ShooterApp world, String filename, float xspawn, float yspawn, int[] direction) {
         super(new Sprite(filename));
         this.world = world;
-        this.xspawn = xspawn;
-        this.yspawn = yspawn;
-        this.direction = direction;
         setX(xspawn);
         setY(yspawn);
         setxSpeed(direction[0] * 10);
@@ -37,7 +31,7 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for(GameObject g : collidedGameObjects) {
             if(g instanceof Enemy){
-
+                world.deleteGameObject(this);
             }
         }
     }
