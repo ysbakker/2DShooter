@@ -5,6 +5,7 @@ import processing.core.PApplet;
 
 public class ShooterApp extends GameEngine {
     private Player player;
+    private EnemySpawner enemySpawner;
 
     public static void main(String[] args) {
         ShooterApp app = new ShooterApp();
@@ -19,6 +20,7 @@ public class ShooterApp extends GameEngine {
 
         createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
+        createEnemySpawner();
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -36,5 +38,9 @@ public class ShooterApp extends GameEngine {
     private void createObjects() {
         player = new Player(this);
         addGameObject(player, 100, 100);
+    }
+
+    public void createEnemySpawner() {
+        enemySpawner = new EnemySpawner(this, player, 1);
     }
 }
