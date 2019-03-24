@@ -4,7 +4,6 @@ import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.SpriteObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Weapon extends SpriteObject implements IAlarmListener {
     private ShooterApp world;
@@ -14,7 +13,6 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     protected Player owner;
     protected int magSize;
     protected String particlefn;
-    protected ArrayList<Particle> particles = new ArrayList<>();
     protected int[] firingDirection = new int[2]; // [x, y]
 
     private boolean canFire = true;
@@ -38,7 +36,6 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     @Override
     public void update() {
         updateFiringDirection();
-        updateParticles();
     }
 
     public void updateFiringDirection() {
@@ -60,26 +57,9 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     public void fire() {
         if (canFire) {
-            Particle p = new Particle(particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection);
-            particles.add(p);
+            world.addGameObject(new Particle(world, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
             addParticleAlarm();
             canFire = false;
-        }
-    }
-
-    public void updateParticles() {
-        Iterator<Particle> i = particles.iterator();
-
-        while (i.hasNext()) {
-            Particle p = i.next();
-
-            if (!world.getGameObjectItems().contains(p)) {
-                world.addGameObject(p);
-            }
-            if (p.isParticleOutOfBounds(world.getWorldWidth(), world.getWorldHeight())) {
-                world.deleteGameObject(p);
-                i.remove();
-            }
         }
     }
 
