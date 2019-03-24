@@ -1,9 +1,12 @@
+import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Player extends AnimatedSpriteObject {
+public class Player extends AnimatedSpriteObject implements ICollidableWithGameObjects {
 
     private final int size;
     private final ShooterApp world;
@@ -174,6 +177,15 @@ public class Player extends AnimatedSpriteObject {
 
     public int[] getFacingDirection() {
         return facingDirection;
+    }
+
+    @Override
+    public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+        for (GameObject g : collidedGameObjects) {
+            if (g instanceof Enemy) {
+                System.out.println("Enemy hit player!");
+            }
+        }
     }
 }
 
