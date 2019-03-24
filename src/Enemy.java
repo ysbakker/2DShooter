@@ -3,28 +3,34 @@ import nl.han.ica.oopg.objects.Sprite;
 
 public abstract class Enemy extends AnimatedSpriteObject {
 
-    private final int size;
     private ShooterApp world;
-
     private int currentFrame;
+    protected int walkingSpeed = -2;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
-        setFriction(0);
-        setxSpeed(10);
-        size = 50;
+        setxSpeed(walkingSpeed);
         currentFrame = 0;
     }
 
     public abstract void attack();
 
     @Override
-    public void update(){
-        if (getX() <= size) {
+    public void update() {
+        if (getX() + getWidth() <= 0) {
             world.deleteGameObject(this);
             System.out.println("Enemy despawned.");
         }
+        loopFrames();
         setCurrentFrameIndex(currentFrame);
+    }
+
+    public void loopFrames() {
+        if(currentFrame >= 7) {
+            currentFrame = 1;
+        } else {
+            currentFrame++;
+        }
     }
 }

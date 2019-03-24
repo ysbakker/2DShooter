@@ -130,10 +130,7 @@ public class Player extends AnimatedSpriteObject {
     }
 
     public void loopFramesRight() {
-        if(currentFrame > 7) {
-            currentFrame = 0;
-        }
-        if (currentFrame == 7) {
+        if(currentFrame >= 7) {
             currentFrame = 0;
         } else {
             currentFrame++;
