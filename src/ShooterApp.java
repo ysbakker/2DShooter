@@ -3,8 +3,14 @@ import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.view.View;
 import processing.core.PApplet;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class ShooterApp extends GameEngine {
     private Player player;
+
+    private int worldWidth;
+    private int worldHeight;
 
     public static void main(String[] args) {
         ShooterApp app = new ShooterApp();
@@ -14,8 +20,8 @@ public class ShooterApp extends GameEngine {
 
     public void setupGame() {
 
-        int worldWidth = 849;
-        int worldHeight = 480;
+        worldWidth = 849;
+        worldHeight = 480;
 
         createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
@@ -30,11 +36,18 @@ public class ShooterApp extends GameEngine {
     }
 
     public void update() {
-
     }
 
     private void createObjects() {
         player = new Player(this);
         addGameObject(player, 100, 100);
+    }
+
+    public int getWorldWidth() {
+        return worldWidth;
+    }
+
+    public int getWorldHeight() {
+        return worldHeight;
     }
 }

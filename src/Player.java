@@ -8,11 +8,11 @@ public class Player extends AnimatedSpriteObject {
     private final int size;
     private final ShooterApp world;
 
-    // 'facing' geeft aan welke kant de speler op kijkt, 0 is naar rechts (default), 1 is naar links
-    private int facing;
+    private int[] facingDirection = new int[2]; // [x, y]
     private int currentFrame;
     private final ArrayList<Key> keys = new ArrayList<>();
     private ArrayList<Key> keysPressed = new ArrayList<>();
+    private Weapon currentWeapon;
 
     private final int walkingSpeed;
 
@@ -24,7 +24,11 @@ public class Player extends AnimatedSpriteObject {
         size = 50;
         walkingSpeed = 4;
         currentFrame = 0;
-        facing = 0;
+        facingDirection[0] = 1;
+        facingDirection[1] = 0;
+
+        currentWeapon = new Weapon(world, this, 0, "media/sprite_rock.png");
+        world.addGameObject(currentWeapon);
 
         // Gebruikte toetsen
         keys.add(new Key('w'));
@@ -64,18 +68,25 @@ public class Player extends AnimatedSpriteObject {
         setCurrentFrameIndex(currentFrame);
 
         if (isWalking()) {
-            if (facing == 0) {
-                loopFramesRight();
-            } else if (facing == 1) {
+            updateDirection();
+            if (facingDirection[0] == -1) {
                 loopFramesLeft();
+            } else {
+                loopFramesRight();
             }
             movePlayer();
         } else {
+            if (facingDirection[0] == -1) {
+                currentFrame = 15;
+            } else {
+                currentFrame = 0;
+            }
             stopPlayer();
-            currentFrame = 0;
-            facing = 0;
         }
 
+        if (isShooting()) {
+            currentWeapon.fire();
+        }
     }
 
     @Override
@@ -95,27 +106,31 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
-    public void movePlayer() {
-        stopPlayer();
+    private void updateDirection() {
+        facingDirection[0] = 0;
+        facingDirection[1] = 0;
         for (Key key: keysPressed) {
             if (key.getKeyCode() == 'a') {
-                setxSpeed(-walkingSpeed);
-                facing = 1;
+                facingDirection[0] = -1;
             }
             if (key.getKeyCode() == 'w') {
-                setySpeed(-walkingSpeed);
+                facingDirection[1] = -1;
             }
             if (key.getKeyCode() == 's') {
-                setySpeed(walkingSpeed);
+                facingDirection[1] = 1;
             }
             if (key.getKeyCode() == 'd') {
-                setxSpeed(walkingSpeed);
-                facing = 0;
+                facingDirection[0] = 1;
             }
         }
     }
 
-    public void stopPlayer() {
+    private void movePlayer() {
+        setxSpeed(facingDirection[0] * walkingSpeed);
+        setySpeed(facingDirection[1] * walkingSpeed);
+    }
+
+    private void stopPlayer() {
         setxSpeed(0);
         setySpeed(0);
     }
@@ -129,7 +144,16 @@ public class Player extends AnimatedSpriteObject {
         return false;
     }
 
-    public void loopFramesRight() {
+    public boolean isShooting() {
+        for (Key key: keysPressed) {
+            if (key.getKeyCode() == ' ') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void loopFramesRight() {
         if(currentFrame > 7) {
             currentFrame = 0;
         }
@@ -140,7 +164,7 @@ public class Player extends AnimatedSpriteObject {
         }
     }
   
-    public void loopFramesLeft() {
+    private void loopFramesLeft() {
         if(currentFrame < 8) {
             currentFrame = 8;
         }
@@ -151,5 +175,12 @@ public class Player extends AnimatedSpriteObject {
         }
     }
 
+    public int[] getFacingDirection() {
+        return facingDirection;
+    }
+
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
+    }
 }
 
