@@ -10,27 +10,25 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     // Player owner is de speler die het wapen 'vast' heeft
     // Het wapen kan een projectiel afvuren wat gespawned wordt op de huidige locatie van de speler
-    protected Player owner;
-    protected int magSize;
+    private Player owner;
     protected String particlefn;
-    protected int[] firingDirection = new int[2]; // [x, y]
 
+    private int[] firingDirection = new int[2]; // [x, y]
     private boolean canFire = true;
+    protected boolean autoFire;
+    protected double autoFireDelay;
+    protected int magSize;
 
-    public Weapon(ShooterApp world, Player owner, int magSize, String particlefn) {
+    public Weapon(ShooterApp world, Player owner) {
         super(new Sprite("media/empty.png"));
         this.world = world;
         this.owner = owner;
-        this.magSize = magSize;
-        this.particlefn = particlefn;
     }
 
-    public Weapon(ShooterApp world, Player owner, int magSize, String particlefn, String weaponfn) {
+    public Weapon(ShooterApp world, Player owner, String weaponfn) {
         super(new Sprite(weaponfn));
         this.world = world;
         this.owner = owner;
-        this.magSize = magSize;
-        this.particlefn = particlefn;
     }
 
     @Override
@@ -64,7 +62,7 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     }
 
     public void addParticleAlarm() {
-        Alarm nextParticle = new Alarm("Next particle", .3);
+        Alarm nextParticle = new Alarm("Next particle", autoFireDelay);
         nextParticle.addTarget(this);
         nextParticle.start();
     }

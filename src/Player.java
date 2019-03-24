@@ -27,7 +27,7 @@ public class Player extends AnimatedSpriteObject {
         facingDirection[0] = 1;
         facingDirection[1] = 0;
 
-        currentWeapon = new Weapon(world, this, 0, "media/sprite_rock.png");
+        currentWeapon = new Rock(world, this);
         world.addGameObject(currentWeapon);
 
         // Gebruikte toetsen
@@ -174,10 +174,6 @@ public class Player extends AnimatedSpriteObject {
 
     public int[] getFacingDirection() {
         return facingDirection;
-    }
-
-    public Weapon getCurrentWeapon() {
-        return currentWeapon;
     }
 }
 
