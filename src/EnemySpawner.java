@@ -5,13 +5,11 @@ import nl.han.ica.oopg.objects.GameObject;
 public class EnemySpawner implements IAlarmListener {
 
     private float enemiesPerSecond;
-    private GameObject player;
     private ShooterApp world;
 
-    public EnemySpawner(ShooterApp world, Player player, float enemiesPerSecond){
+    public EnemySpawner(ShooterApp world, float enemiesPerSecond){
         this.enemiesPerSecond = enemiesPerSecond;
         this.world = world;
-        this.player = player;
         startAlarm();
     }
 
@@ -24,7 +22,7 @@ public class EnemySpawner implements IAlarmListener {
     @Override
     public void triggerAlarm(String alarmName) {
         Enemy skeleton = new Skeleton(world);
-        world.addGameObject(skeleton, world.width, player.getY());
+        world.addGameObject(skeleton, world.getWidth(), world.random(skeleton.getHeight() / 2, world.getHeight() - skeleton.getHeight() * 1.5F));
         startAlarm();
     }
 

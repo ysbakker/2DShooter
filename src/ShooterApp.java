@@ -52,6 +52,6 @@ public class ShooterApp extends GameEngine {
     }
 
     public void createEnemySpawner() {
-        enemySpawner = new EnemySpawner(this, player, 1);
+        enemySpawner = new EnemySpawner(this, 20);
     }
 }

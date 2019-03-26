@@ -9,12 +9,12 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     private ShooterApp world;
     private int currentFrame;
-    protected int walkingSpeed = -2;
+    protected int walkingSpeed = 2;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
-        setxSpeed(walkingSpeed);
+        setxSpeed(-walkingSpeed);
         currentFrame = 0;
     }
 
@@ -24,7 +24,6 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void update() {
         if (getX() + getWidth() <= 0) {
             world.deleteGameObject(this);
-            System.out.println("Enemy despawned.");
         }
         loopFrames();
         setCurrentFrameIndex(currentFrame);
@@ -42,11 +41,10 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g : collidedGameObjects) {
             if (g instanceof Particle) {
-                System.out.println("Enemy died.");
                 world.deleteGameObject(this);
             }
             if (g instanceof Player) {
-                System.out.println("Enemy hit player!");
+                // Enemy hit player
             }
         }
     }

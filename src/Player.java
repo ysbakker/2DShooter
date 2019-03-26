@@ -185,7 +185,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g : collidedGameObjects) {
             if (g instanceof Enemy) {
-                System.out.println("Enemy hit player!");
+                // Enemy hit player
             }
         }
     }
