@@ -9,13 +9,14 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     private ShooterApp world;
     private int currentFrame;
-    protected int walkingSpeed = 2;
+    protected float walkingSpeed = 2;
 
     private float previousX;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
+        walkingSpeed = world.random(walkingSpeed-0.8F, walkingSpeed+0.8F);
         setxSpeed(-walkingSpeed);
         currentFrame = 1;
         previousX = world.getWorldWidth();

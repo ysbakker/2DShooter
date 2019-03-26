@@ -23,7 +23,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         this.world = world;
         setFriction(0);
 
-        walkingSpeed = 5;
+        walkingSpeed = 4;
         currentFrame = 0;
         facingDirection[0] = 1;
         facingDirection[1] = 0;
