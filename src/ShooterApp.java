@@ -3,12 +3,10 @@ import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.view.View;
 import processing.core.PApplet;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class ShooterApp extends GameEngine {
     private Player player;
     private EnemySpawner enemySpawner;
+    private Gamestate state;
 
     private int worldWidth;
     private int worldHeight;
