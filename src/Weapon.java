@@ -56,7 +56,9 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     public void fire() {
         if (canFire) {
             world.addGameObject(new Particle(world, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
-            addParticleAlarm();
+            if (autoFire) {
+                addParticleAlarm();
+            }
             canFire = false;
         }
     }
@@ -70,5 +72,13 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     @Override
     public void triggerAlarm(String s) {
         canFire = true;
+    }
+
+    public void setCanFire(boolean val) {
+        canFire = val;
+    }
+
+    public boolean getAutoFire() {
+        return autoFire;
     }
 }
