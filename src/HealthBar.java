@@ -24,13 +24,8 @@ public class HealthBar extends GameObject {
         g.rect(missingHealthBarX, missingHealthBarY, missingHealthBarLength, missingHealthBarWidth);
 
         float currentHealthBarLength = missingHealthBarLength * (currentHealth / maxHealth);
-        float currentHealthBarX = missingHealthBarX;
-        float currentHealthBarY = missingHealthBarY;
-        float currentHealthBarWidth = missingHealthBarWidth;
         g.fill(36, 214, 17);
-        g.rect(currentHealthBarX, currentHealthBarY, currentHealthBarLength, currentHealthBarWidth);
-
-
+        g.rect(missingHealthBarX, missingHealthBarY, currentHealthBarLength, missingHealthBarWidth);
     }
 
     @Override
