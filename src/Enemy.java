@@ -10,12 +10,17 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     private ShooterApp world;
     private int currentFrame;
     protected int walkingSpeed = 2;
+    protected float maxHealth;
+    protected float currentHealth;
+    protected HealthBar healthBar;
+
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
         setxSpeed(-walkingSpeed);
         currentFrame = 0;
+        healthBar = new HealthBar(this, world);
     }
 
     public abstract void attack();
@@ -24,9 +29,17 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void update() {
         if (getX() + getWidth() <= 0) {
             world.deleteGameObject(this);
+            world.deleteGameObject(healthBar);
+
+        }
+
+        if(currentHealth == 0) {
+            world.deleteGameObject(this);
+            world.deleteGameObject(healthBar);
         }
         loopFrames();
         setCurrentFrameIndex(currentFrame);
+
     }
 
     public void loopFrames() {
@@ -41,11 +54,19 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g : collidedGameObjects) {
             if (g instanceof Particle) {
-                world.deleteGameObject(this);
+                currentHealth --;
             }
             if (g instanceof Player) {
                 // Enemy hit player
             }
         }
+    }
+
+    public float getMaxHealth() {
+        return maxHealth;
+    }
+
+    public float getCurrentHealth() {
+        return currentHealth;
     }
 }
