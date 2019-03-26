@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends AnimatedSpriteObject implements ICollidableWithGameObjects {
-
-    private final int size;
     private final ShooterApp world;
 
     private int[] facingDirection = new int[2]; // [x, y]
@@ -24,7 +22,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         this.world = world;
         setFriction(0);
 
-        size = 50;
         walkingSpeed = 4;
         currentFrame = 0;
         facingDirection[0] = 1;
@@ -51,13 +48,13 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             setySpeed(0);
             setY(10);
         }
-        if (getX() >= world.width - size) {
+        if (getX() >= world.width - getWidth()) {
             setxSpeed(0);
-            setX(world.width - size);
+            setX(world.width - getWidth());
         }
-        if (getY() >= world.height - size - 25) {
+        if (getY() >= world.height - getHeight()*2) {
             setySpeed(0);
-            setY(world.height - size - 25);
+            setY(world.height - getHeight()*2);
         }
       
         for (Key key : keys) {

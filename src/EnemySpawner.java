@@ -22,7 +22,7 @@ public class EnemySpawner implements IAlarmListener {
     @Override
     public void triggerAlarm(String alarmName) {
         Enemy skeleton = new Skeleton(world);
-        world.addGameObject(skeleton, world.getWidth(), world.random(skeleton.getHeight() / 2, world.getHeight() - skeleton.getHeight() * 1.5F));
+        world.addGameObject(skeleton, world.getWidth(), world.random(skeleton.getHeight() / 2, world.getHeight() - skeleton.getHeight() * 2F));
         startAlarm();
     }
 

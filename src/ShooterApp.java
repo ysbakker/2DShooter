@@ -20,7 +20,7 @@ public class ShooterApp extends GameEngine {
     public void setupGame() {
 
         worldWidth = 849;
-        worldHeight = 480;
+        worldHeight = 500;
 
         createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
