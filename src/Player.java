@@ -9,6 +9,7 @@ import java.util.List;
 public class Player extends AnimatedSpriteObject implements ICollidableWithGameObjects {
     private final ShooterApp world;
 
+    private float[] previousLocation = new float[2]; // [x, y]
     private int[] facingDirection = new int[2]; // [x, y]
     private int currentFrame;
     private final ArrayList<Key> keys = new ArrayList<>();
@@ -22,7 +23,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         this.world = world;
         setFriction(0);
 
-        walkingSpeed = 4;
+        walkingSpeed = 5;
         currentFrame = 0;
         facingDirection[0] = 1;
         facingDirection[1] = 0;
@@ -69,10 +70,14 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
         if (isWalking()) {
             updateDirection();
-            if (facingDirection[0] == -1) {
-                loopFramesLeft();
-            } else {
-                loopFramesRight();
+            if (ShooterApp.dist(previousLocation[0], previousLocation[1], getX(), getY()) > walkingSpeed * 2) {
+                if (facingDirection[0] == -1) {
+                    loopFramesLeft();
+                } else {
+                    loopFramesRight();
+                }
+                previousLocation[0] = getX();
+                previousLocation[1] = getY();
             }
             movePlayer();
         } else {
