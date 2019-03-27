@@ -54,7 +54,8 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g : collidedGameObjects) {
             if (g instanceof Particle) {
-                currentHealth --;
+                Weapon weapon = ((Particle) g).getWeapon();
+                currentHealth -= weapon.getDamage();
             }
             if (g instanceof Player) {
                 // Enemy hit player
