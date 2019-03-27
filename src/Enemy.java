@@ -12,6 +12,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
+    private boolean living;
     protected float walkingSpeed = 2;
     private float previousX;
 
@@ -22,22 +23,24 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         setxSpeed(-walkingSpeed);
         healthBar = new HealthBar(this, world);
         currentFrame = 1;
-        previousX = world.getWorldWidth();
+        living = true;
+        previousX = world.getWorldBoundaries()[2];
     }
 
     public abstract void attack();
 
     @Override
     public void update() {
-        if (getX() + getWidth() <= 0) {
+        if (getX() + getWidth() <= world.getWorldBoundaries()[0]) {
             world.deleteGameObject(this);
             world.deleteGameObject(healthBar);
-
+            this.living = false;
         }
 
         if(currentHealth == 0) {
             world.deleteGameObject(this);
             world.deleteGameObject(healthBar);
+            this.living = false;
         }
 
         if (getX() < previousX - walkingSpeed*3) {
@@ -75,5 +78,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     public float getCurrentHealth() {
         return currentHealth;
+    }
+
+    public boolean getLiving() {
+        return living;
     }
 }

@@ -41,22 +41,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
     @Override
     public void update() {
-        if (getX() <= 0) {
-            setxSpeed(0);
-            setX(0);
-        }
-        if (getY() <= 10) {
-            setySpeed(0);
-            setY(10);
-        }
-        if (getX() >= world.width - getWidth()) {
-            setxSpeed(0);
-            setX(world.width - getWidth());
-        }
-        if (getY() >= world.height - getHeight()*2) {
-            setySpeed(0);
-            setY(world.height - getHeight()*2);
-        }
+        handleWorldBoundaries();
       
         for (Key key : keys) {
             if (key.isPressed() && !keysPressed.contains(key)) {
@@ -129,6 +114,27 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             if (key.getKeyCode() == 'd') {
                 facingDirection[0] = 1;
             }
+        }
+    }
+
+    private void handleWorldBoundaries () {
+        int[] worldBoundaries = world.getWorldBoundaries();
+
+        if (getX() <= worldBoundaries[0]) {
+            setxSpeed(0);
+            setX(worldBoundaries[0]);
+        }
+        if (getY() <= worldBoundaries[1]) {
+            setySpeed(0);
+            setY(worldBoundaries[1]);
+        }
+        if (getX() >= worldBoundaries[2] - getWidth()) {
+            setxSpeed(0);
+            setX(worldBoundaries[2] - getWidth());
+        }
+        if (getY() >= worldBoundaries[3] - getHeight()) {
+            setySpeed(0);
+            setY(worldBoundaries[3] - getHeight());
         }
     }
 
