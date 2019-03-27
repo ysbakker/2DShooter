@@ -1,14 +1,18 @@
 
+import nl.han.ica.oopg.alarm.Alarm;
+import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.view.View;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
 
-public class ShooterApp extends GameEngine {
+public class ShooterApp extends GameEngine implements IAlarmListener {
     private Player player;
     private EnemySpawner enemySpawner;
     private Gamestate state;
+    private int waveDelay;
+    private boolean delayTriggered;
 
     private int worldWidth, worldHeight;
     private int[] worldBoundaries;
@@ -30,8 +34,11 @@ public class ShooterApp extends GameEngine {
 
         createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
+
         createWaves();
         waves.get(currentWave).start();
+        waveDelay = 5;
+        delayTriggered = false;
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -46,9 +53,9 @@ public class ShooterApp extends GameEngine {
         if (waves.get(currentWave).allEnemiesSpawned()) {
             waves.get(currentWave).stopSpawning();
             if (waves.get(currentWave).allEnemiesKilled()) {
-                if (currentWave < waves.size() - 1) {
-                    currentWave++;
-                    waves.get(currentWave).start();
+                if (currentWave < waves.size() - 1 && !delayTriggered) {
+                    startDelay();
+                    delayTriggered = true;
                 }
             }
         }
@@ -74,5 +81,17 @@ public class ShooterApp extends GameEngine {
     public void createWaves() {
         waves.add(new Wave(this, 5, 1, new Species[]{Species.SKELETON}));
         waves.add(new Wave(this, 50, 10, new Species[]{Species.SKELETON}));
+    }
+
+    public void startDelay() {
+        Alarm delay = new Alarm("Next wave", waveDelay);
+        delay.addTarget(this);
+        delay.start();
+    }
+
+    public void triggerAlarm(String s) {
+        currentWave++;
+        waves.get(currentWave).start();
+        delayTriggered = false;
     }
 }
