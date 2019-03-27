@@ -9,6 +9,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     private ShooterApp world;
     private int currentFrame;
+    private boolean living;
     protected float walkingSpeed = 2;
 
     private float previousX;
@@ -19,14 +20,15 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         walkingSpeed = world.random(walkingSpeed-0.8F, walkingSpeed+0.8F);
         setxSpeed(-walkingSpeed);
         currentFrame = 1;
-        previousX = world.getWorldWidth();
+        living = true;
+        previousX = world.getWorldBoundaries()[2];
     }
 
     public abstract void attack();
 
     @Override
     public void update() {
-        if (getX() + getWidth() <= 0) {
+        if (getX() + getWidth() <= world.getWorldBoundaries()[0]) {
             world.deleteGameObject(this);
         }
 
@@ -50,10 +52,15 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         for (GameObject g : collidedGameObjects) {
             if (g instanceof Particle) {
                 world.deleteGameObject(this);
+                this.living = false;
             }
             if (g instanceof Player) {
                 // Enemy hit player
             }
         }
+    }
+
+    public boolean getLiving() {
+        return living;
     }
 }

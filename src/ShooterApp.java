@@ -3,13 +3,18 @@ import nl.han.ica.oopg.engine.GameEngine;
 import nl.han.ica.oopg.view.View;
 import processing.core.PApplet;
 
+import java.util.ArrayList;
+
 public class ShooterApp extends GameEngine {
     private Player player;
     private EnemySpawner enemySpawner;
     private Gamestate state;
 
-    private int worldWidth;
-    private int worldHeight;
+    private int worldWidth, worldHeight;
+    private int[] worldBoundaries;
+
+    private ArrayList<Wave> waves = new ArrayList<>();
+    private int currentWave = 0;
 
     public static void main(String[] args) {
         ShooterApp app = new ShooterApp();
@@ -18,13 +23,15 @@ public class ShooterApp extends GameEngine {
     }
 
     public void setupGame() {
-
         worldWidth = 849;
         worldHeight = 500;
 
+        worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
+
         createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
-        createEnemySpawner();
+        createWaves();
+        waves.get(currentWave).start();
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -36,6 +43,15 @@ public class ShooterApp extends GameEngine {
     }
 
     public void update() {
+        if (waves.get(currentWave).allEnemiesSpawned()) {
+            waves.get(currentWave).stopSpawning();
+            if (waves.get(currentWave).allEnemiesKilled()) {
+                if (currentWave < waves.size() - 1) {
+                    currentWave++;
+                    waves.get(currentWave).start();
+                }
+            }
+        }
     }
 
     private void createObjects() {
@@ -51,7 +67,12 @@ public class ShooterApp extends GameEngine {
         return worldHeight;
     }
 
-    public void createEnemySpawner() {
-        enemySpawner = new EnemySpawner(this, 1);
+    public int[] getWorldBoundaries() {
+        return worldBoundaries;
+    }
+
+    public void createWaves() {
+        waves.add(new Wave(this, 5, 1, new Species[]{Species.SKELETON}));
+        waves.add(new Wave(this, 50, 10, new Species[]{Species.SKELETON}));
     }
 }
