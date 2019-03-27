@@ -9,18 +9,20 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     private ShooterApp world;
     private int currentFrame;
-    protected int walkingSpeed = 2;
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
-
+    protected float walkingSpeed = 2;
+    private float previousX;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
+        walkingSpeed = world.random(walkingSpeed-0.8F, walkingSpeed+0.8F);
         setxSpeed(-walkingSpeed);
-        currentFrame = 0;
         healthBar = new HealthBar(this, world);
+        currentFrame = 1;
+        previousX = world.getWorldWidth();
     }
 
     public abstract void attack();
@@ -37,7 +39,11 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             world.deleteGameObject(this);
             world.deleteGameObject(healthBar);
         }
-        loopFrames();
+
+        if (getX() < previousX - walkingSpeed*3) {
+            loopFrames();
+            previousX = getX();
+        }
         setCurrentFrameIndex(currentFrame);
 
     }
