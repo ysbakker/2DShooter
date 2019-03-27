@@ -5,5 +5,6 @@ public class Rock extends Weapon {
         autoFireDelay = 0.3;
         magSize = 0;
         particlefn = "media/sprite_rock.png";
+        damage = 5;
     }
 }

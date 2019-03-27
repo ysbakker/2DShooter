@@ -18,6 +18,7 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     protected boolean autoFire;
     protected double autoFireDelay;
     protected int magSize;
+    protected int damage;
 
     public Weapon(ShooterApp world, Player owner) {
         super(new Sprite("media/empty.png"));
@@ -55,7 +56,7 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     public void fire() {
         if (canFire) {
-            world.addGameObject(new Particle(world, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
+            world.addGameObject(new Particle(world, this, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
             if (autoFire) {
                 addParticleAlarm();
             }
@@ -80,5 +81,9 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     public boolean getAutoFire() {
         return autoFire;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

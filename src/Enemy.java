@@ -9,8 +9,10 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     private ShooterApp world;
     private int currentFrame;
+    protected float maxHealth;
+    protected float currentHealth;
+    protected HealthBar healthBar;
     protected float walkingSpeed = 2;
-
     private float previousX;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
@@ -18,6 +20,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         this.world = world;
         walkingSpeed = world.random(walkingSpeed-0.8F, walkingSpeed+0.8F);
         setxSpeed(-walkingSpeed);
+        healthBar = new HealthBar(this, world);
         currentFrame = 1;
         previousX = world.getWorldWidth();
     }
@@ -28,6 +31,13 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void update() {
         if (getX() + getWidth() <= 0) {
             world.deleteGameObject(this);
+            world.deleteGameObject(healthBar);
+
+        }
+
+        if(currentHealth == 0) {
+            world.deleteGameObject(this);
+            world.deleteGameObject(healthBar);
         }
 
         if (getX() < previousX - walkingSpeed*3) {
@@ -35,6 +45,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             previousX = getX();
         }
         setCurrentFrameIndex(currentFrame);
+
     }
 
     public void loopFrames() {
@@ -49,11 +60,20 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g : collidedGameObjects) {
             if (g instanceof Particle) {
-                world.deleteGameObject(this);
+                Weapon weapon = ((Particle) g).getWeapon();
+                currentHealth -= weapon.getDamage();
             }
             if (g instanceof Player) {
                 // Enemy hit player
             }
         }
+    }
+
+    public float getMaxHealth() {
+        return maxHealth;
+    }
+
+    public float getCurrentHealth() {
+        return currentHealth;
     }
 }

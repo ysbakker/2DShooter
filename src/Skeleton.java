@@ -6,6 +6,8 @@ public class Skeleton extends Enemy {
         super(world, new Sprite("media/sprite_skeleton.png"), 9);
 
         walkingSpeed = 2;
+        maxHealth = 10;
+        currentHealth = 10;
     }
 
     @Override

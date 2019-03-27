@@ -7,9 +7,11 @@ import java.util.List;
 
 public class Particle extends SpriteObject implements ICollidableWithGameObjects {
     private ShooterApp world;
+    private Weapon weapon;
 
-    public Particle(ShooterApp world, String filename, float xspawn, float yspawn, int[] direction) {
+    public Particle(ShooterApp world, Weapon weapon, String filename, float xspawn, float yspawn, int[] direction) {
         super(new Sprite(filename));
+        this.weapon = weapon;
         this.world = world;
         setX(xspawn);
         setY(yspawn);
@@ -34,5 +36,9 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
                 world.deleteGameObject(this);
             }
         }
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 }
