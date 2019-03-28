@@ -32,7 +32,7 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
     @Override
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for(GameObject g : collidedGameObjects) {
-            if(g instanceof Enemy){
+            if(g instanceof Enemy && ((Enemy) g).getLiving()){
                 world.deleteGameObject(this);
             }
         }

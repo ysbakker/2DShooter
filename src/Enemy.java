@@ -6,15 +6,15 @@ import nl.han.ica.oopg.objects.Sprite;
 import java.util.List;
 
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects {
-
     private ShooterApp world;
     private int currentFrame;
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
-    private boolean living;
     protected float walkingSpeed = 2;
+    private boolean living;
     private float previousX;
+    private int despawnCounter = 100;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
@@ -31,16 +31,19 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     @Override
     public void update() {
-        if (getX() + getWidth() <= world.getWorldBoundaries()[0]) {
-            world.deleteGameObject(this);
-            world.deleteGameObject(healthBar);
+        if (getX() + getWidth() <= world.getWorldBoundaries()[0] || currentHealth == 0) {
             this.living = false;
         }
 
-        if(currentHealth == 0) {
-            world.deleteGameObject(this);
+        if (!living) {
+            setxSpeed(0);
+            currentFrame = 0;
             world.deleteGameObject(healthBar);
-            this.living = false;
+            if (despawnCounter <= 0) {
+                world.deleteGameObject(this);
+            } else {
+                despawnCounter--;
+            }
         }
 
         if (getX() < previousX - walkingSpeed*3) {
@@ -62,11 +65,11 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     @Override
     public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g : collidedGameObjects) {
-            if (g instanceof Particle) {
+            if (g instanceof Particle && this.living) {
                 Weapon weapon = ((Particle) g).getWeapon();
                 currentHealth -= weapon.getDamage();
             }
-            if (g instanceof Player) {
+            if (g instanceof Player && this.living) {
                 // Enemy hit player
             }
         }

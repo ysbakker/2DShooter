@@ -9,7 +9,7 @@ public class EnemySpawner implements IAlarmListener {
     private ShooterApp world;
     private Species type;
     private int enemiesSpawned;
-    private Alarm spawnTimer;
+    public Alarm spawnTimer;
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
     public EnemySpawner(ShooterApp world, float enemiesPerSecond, Species type){
