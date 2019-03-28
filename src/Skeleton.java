@@ -7,7 +7,7 @@ public class Skeleton extends Enemy {
 
         walkingSpeed = 2;
         maxHealth = 10;
-        currentHealth = 10;
+        currentHealth = maxHealth;
     }
 
     @Override

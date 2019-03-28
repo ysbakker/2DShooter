@@ -1,29 +1,64 @@
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
-import nl.han.ica.oopg.objects.GameObject;
+
+import java.util.ArrayList;
 
 public class EnemySpawner implements IAlarmListener {
 
     private float enemiesPerSecond;
     private ShooterApp world;
+    private Species type;
+    private int enemiesSpawned;
+    private Alarm spawnTimer;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public EnemySpawner(ShooterApp world, float enemiesPerSecond){
+    public EnemySpawner(ShooterApp world, float enemiesPerSecond, Species type){
         this.enemiesPerSecond = enemiesPerSecond;
         this.world = world;
+        this.type = type;
+        enemiesSpawned = 0;
         startAlarm();
     }
 
     private void startAlarm(){
-        Alarm alarm = new Alarm("New Enemy", 1/enemiesPerSecond);
-        alarm.addTarget(this);
-        alarm.start();
+        spawnTimer = new Alarm("New Enemy", 1/enemiesPerSecond);
+        spawnTimer.addTarget(this);
+        spawnTimer.start();
     }
 
     @Override
     public void triggerAlarm(String alarmName) {
-        Enemy skeleton = new Skeleton(world);
-        world.addGameObject(skeleton, world.getWidth(), world.random(skeleton.getHeight() / 2, world.getHeight() - skeleton.getHeight() * 2F));
+        Enemy e = new Skeleton(world);
+        if (type == Species.SKELETON) {
+            e = new Skeleton(world);
+        } else if (type == Species.ORC) {
+            // todo
+        } else if (type == Species.TROLL) {
+            // todo
+        } else if (type == Species.SKELETON_FLAME) {
+            // todo
+        }
+
+        world.addGameObject(e, world.getWorldBoundaries()[2], world.random(world.getWorldBoundaries()[1], world.getWorldBoundaries()[3] - e.getHeight()));
+        enemiesSpawned++;
+        enemies.add(e);
         startAlarm();
     }
 
+    public int getEnemiesSpawned() {
+        return enemiesSpawned;
+    }
+
+    public boolean allEnemiesDead() {
+        for (Enemy e: enemies) {
+            if (e.getLiving()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void stop() {
+        spawnTimer.stop();
+    }
 }
