@@ -30,14 +30,9 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         int worldHeight = 500;
 
         worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
-
-        createObjects();
         createViewWithoutViewport(worldWidth, worldHeight);
 
-        createWaves();
-        waves.get(currentWave).start();
-        waveDelay = 5;
-        delayTriggered = false;
+        this.updateState(Gamestate.IN_GAME);
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -49,21 +44,49 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     public void update() {
-
         switch (state){
             case MAIN_MENU:
-                mainMenu.draw();
+                break;
             case IN_GAME:
-
-        }
-        if (waves.get(currentWave).allEnemiesSpawned()) {
-            waves.get(currentWave).stopSpawning();
-            if (waves.get(currentWave).allEnemiesKilled()) {
-                if (currentWave < waves.size() - 1 && !delayTriggered) {
-                    startDelay();
-                    delayTriggered = true;
+                if (waves.get(currentWave).allEnemiesSpawned()) {
+                    waves.get(currentWave).stopSpawning();
+                    if (waves.get(currentWave).allEnemiesKilled()) {
+                        if (currentWave < waves.size() - 1 && !delayTriggered) {
+                            startDelay();
+                            delayTriggered = true;
+                        }
+                    }
                 }
-            }
+                break;
+            case QUIT_GAME:
+                break;
+            case PAUSE_GAME:
+                break;
+            case HIGH_SCORES:
+                break;
+        }
+    }
+
+    private void updateState(Gamestate state) {
+        this.state = state;
+        switch (state){
+            case MAIN_MENU:
+                mainMenu = new Menu(this);
+                this.addGameObject(mainMenu);
+                break;
+            case IN_GAME:
+                createObjects();
+                createWaves();
+                waves.get(currentWave).start();
+                waveDelay = 5;
+                delayTriggered = false;
+                break;
+            case QUIT_GAME:
+                break;
+            case PAUSE_GAME:
+                break;
+            case HIGH_SCORES:
+                break;
         }
     }
 
