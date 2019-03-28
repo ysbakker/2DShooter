@@ -29,7 +29,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
 
     @Override
     public void update() {
-        if (getX() + getWidth() <= world.getWorldBoundaries()[0] || currentHealth == 0) {
+        if (getX() + getWidth() <= world.getWorldBoundaries()[0] || currentHealth <= 0) {
             this.living = false;
         }
 

@@ -76,6 +76,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
         if (isShooting()) {
             currentWeapon.fire();
+        } else if (!isShooting() && !currentWeapon.getAutoFire()) {
+            currentWeapon.setCanFire(true);
         }
     }
 

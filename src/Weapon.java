@@ -17,7 +17,7 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
     protected double fireDelay;
     protected int magSize;
     protected int damage;
-    private boolean shootingDelayPassed = true;
+    protected boolean shootingDelayPassed = true;
 
     protected int particleSpeed;
     protected float particleSpawnLocationX;

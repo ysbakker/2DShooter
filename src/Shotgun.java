@@ -17,7 +17,7 @@ public class Shotgun extends Weapon {
 
     @Override
     public void fire() {
-        if (canFire) {
+        if (!autoFire && canFire && shootingDelayPassed) {
             Particle middleBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed);
             world.addGameObject(middleBullet);
             if(middleBullet.getySpeed() == 0 ) {
@@ -28,8 +28,10 @@ public class Shotgun extends Weapon {
                 world.addGameObject(topBullet);
                 world.addGameObject(bottomBullet);
             }
+
             addParticleAlarm();
             canFire = false;
+            shootingDelayPassed = false;
         }
     }
 }
