@@ -13,8 +13,6 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private Gamestate state;
     private int waveDelay;
     private boolean delayTriggered;
-
-    private int worldWidth, worldHeight;
     private int[] worldBoundaries;
 
     private ArrayList<Wave> waves = new ArrayList<>();
@@ -27,8 +25,8 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     public void setupGame() {
-        worldWidth = 849;
-        worldHeight = 500;
+        int worldWidth = 849;
+        int worldHeight = 500;
 
         worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
 
@@ -64,14 +62,6 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private void createObjects() {
         player = new Player(this);
         addGameObject(player, 100, 100);
-    }
-
-    public int getWorldWidth() {
-        return worldWidth;
-    }
-
-    public int getWorldHeight() {
-        return worldHeight;
     }
 
     public int[] getWorldBoundaries() {

@@ -28,7 +28,7 @@ public class EnemySpawner implements IAlarmListener {
 
     @Override
     public void triggerAlarm(String alarmName) {
-        Enemy e = new Skeleton(world);
+        Enemy e = null;
         if (type == Species.SKELETON) {
             e = new Skeleton(world);
         } else if (type == Species.ORC) {
