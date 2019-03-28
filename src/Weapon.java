@@ -19,6 +19,7 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     protected double autoFireDelay;
     protected int magSize;
     protected int damage;
+    private boolean shootingDelayPassed = true;
 
     public Weapon(ShooterApp world, Player owner) {
         super(new Sprite("media/empty.png"));
@@ -55,12 +56,15 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     }
 
     public void fire() {
-        if (canFire) {
+        if (autoFire && canFire) {
             world.addGameObject(new Particle(world, this, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
-            if (autoFire) {
-                addParticleAlarm();
-            }
+            addParticleAlarm();
             canFire = false;
+        } else if (!autoFire && canFire && shootingDelayPassed) {
+            world.addGameObject(new Particle(world, this, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
+            addParticleAlarm();
+            canFire = false;
+            shootingDelayPassed = false;
         }
     }
 
@@ -72,7 +76,10 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     @Override
     public void triggerAlarm(String s) {
-        canFire = true;
+        shootingDelayPassed = true;
+        if (autoFire) {
+            canFire = true;
+        }
     }
 
     public void setCanFire(boolean val) {
