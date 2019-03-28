@@ -6,6 +6,7 @@ public class Button extends GameObject {
     private Gamestate targetState;
     private String description;
     private int color;
+    private ShooterApp world;
 
     public Button(float x, float y, int width, int height, int color, String text, Gamestate targetState){
         setHeight(height);
@@ -15,11 +16,12 @@ public class Button extends GameObject {
         this.color = color;
         this.description = text;
         this.targetState = targetState;
+        world.addGameObject(this);
     }
 
     @Override
     public void update() {
-
+        
     }
 
     @Override

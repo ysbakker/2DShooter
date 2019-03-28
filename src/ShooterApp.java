@@ -11,6 +11,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private Player player;
     private EnemySpawner enemySpawner;
     private Gamestate state;
+    private Menu mainMenu;
     private int waveDelay;
     private boolean delayTriggered;
     private int[] worldBoundaries;
@@ -48,6 +49,13 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     public void update() {
+
+        switch (state){
+            case MAIN_MENU:
+                mainMenu.draw();
+            case IN_GAME:
+
+        }
         if (waves.get(currentWave).allEnemiesSpawned()) {
             waves.get(currentWave).stopSpawning();
             if (waves.get(currentWave).allEnemiesKilled()) {
