@@ -11,7 +11,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
-    protected float walkingSpeed = 2;
+    protected float walkingSpeed;
     private boolean living;
     private float previousX;
     private int despawnCounter = 100;
@@ -19,8 +19,6 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
-        walkingSpeed = world.random(walkingSpeed-0.8F, walkingSpeed+0.8F);
-        setxSpeed(-walkingSpeed);
         healthBar = new HealthBar(this, world);
         currentFrame = 1;
         living = true;
@@ -46,7 +44,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             }
         }
 
-        if (getX() < previousX - walkingSpeed*3) {
+        if (getX() < previousX - 10) {
             loopFrames();
             previousX = getX();
         }

@@ -32,11 +32,11 @@ public class EnemySpawner implements IAlarmListener {
         if (type == Species.SKELETON) {
             e = new Skeleton(world);
         } else if (type == Species.ORC) {
-            // todo
+            e = new Orc(world);
         } else if (type == Species.TROLL) {
-            // todo
+            e = new Troll(world);
         } else if (type == Species.SKELETON_FLAME) {
-            // todo
+            e = new SkeletonFlame(world);
         }
 
         world.addGameObject(e, world.getWorldBoundaries()[2], world.random(world.getWorldBoundaries()[1], world.getWorldBoundaries()[3] - e.getHeight()));

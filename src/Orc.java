@@ -1,12 +1,11 @@
 import nl.han.ica.oopg.objects.Sprite;
 
-public class Skeleton extends Enemy {
+public class Orc extends Enemy {
+    public Orc(ShooterApp world) {
+        super(world, new Sprite("media/sprite_orc.png"), 9);
 
-    public Skeleton(ShooterApp world) {
-        super(world, new Sprite("media/sprite_skeleton.png"), 9);
-
-        walkingSpeed = 3;
-        maxHealth = 10;
+        walkingSpeed = 1;
+        maxHealth = 50;
         currentHealth = maxHealth;
         walkingSpeed = world.random(walkingSpeed-0.3F, walkingSpeed+0.3F);
         setxSpeed(-walkingSpeed);

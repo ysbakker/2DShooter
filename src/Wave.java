@@ -6,7 +6,6 @@ public class Wave {
     private int enemyCount, enemiesPerSecond;
     private Species[] species;
     private ArrayList<EnemySpawner> spawners = new ArrayList<>();
-    private Random rand = new Random();
 
     public Wave(ShooterApp world, int enemyCount, int enemiesPerSecond, Species[] species) {
         this.world = world;
@@ -20,15 +19,8 @@ public class Wave {
     }
 
     public void createSpawners() {
-        int[] randomDistribution;
-        if (species.length > 1) {
-            randomDistribution = generateDistribution(species.length);
-        } else {
-            randomDistribution = new int[]{100};
-        }
-
         for (int i = 0; i < species.length; i++) {
-            spawners.add(new EnemySpawner(world, (randomDistribution[i] / 100F) * enemiesPerSecond, species[i]));
+            spawners.add(new EnemySpawner(world, enemiesPerSecond / species.length, species[i]));
         }
     }
 
@@ -54,17 +46,5 @@ public class Wave {
             }
         }
         return true;
-    }
-
-    public int[] generateDistribution(int speciesCount) {
-        int s = 100;
-        int val[] = new int[speciesCount];
-        for (int i = 0; i < speciesCount--; i++) {
-            int r = rand.nextInt(s);
-            s -= r;
-            val[i] = r;
-        }
-        val[val.length-1] = s;
-        return val;
     }
 }
