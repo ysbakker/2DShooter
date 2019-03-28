@@ -20,7 +20,7 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
     }
 
     public void update() {
-        if (this.isParticleOutOfBounds(world.getWorldWidth(), world.getWorldHeight())) {
+        if (this.isParticleOutOfBounds(world.getView().getWorldWidth(), world.getView().getWorldHeight())) {
             world.deleteGameObject(this);
         }
     }
