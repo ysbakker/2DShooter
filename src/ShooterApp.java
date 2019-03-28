@@ -32,7 +32,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
         createViewWithoutViewport(worldWidth, worldHeight);
 
-        this.updateState(Gamestate.IN_GAME);
+        this.setGameState(Gamestate.IN_GAME);
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -67,7 +67,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         }
     }
 
-    private void updateState(Gamestate state) {
+    private void setGameState(Gamestate state) {
         this.state = state;
         switch (state){
             case MAIN_MENU:
