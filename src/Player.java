@@ -28,7 +28,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         facingDirection[0] = 1;
         facingDirection[1] = 0;
 
-        currentWeapon = new Rock(world, this);
+        currentWeapon = new Pistol(world, this);
         world.addGameObject(currentWeapon);
 
         // Gebruikte toetsen

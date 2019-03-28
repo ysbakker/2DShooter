@@ -2,6 +2,7 @@ import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.SpriteObject;
+import processing.core.PImage;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,17 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     protected int magSize;
     protected int damage;
 
+    protected int particleSpeed;
+    protected float particleSpawnLocationX;
+    protected float particleSpawnLocationY;
+    protected float weaponSpawnLocationX;
+    protected float weaponSpawnLocationY;
+
+    protected float particleOffsetX;
+    protected float particleOffsetY;
+    protected float weaponOffsetX;
+    protected float weaponOffsetY;
+
     public Weapon(ShooterApp world, Player owner) {
         super(new Sprite("media/empty.png"));
         this.world = world;
@@ -35,6 +47,22 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     @Override
     public void update() {
         updateFiringDirection();
+        updateWeaponPosition();
+
+
+
+    }
+
+    private void updateWeaponPosition() {
+
+        particleSpawnLocationX = owner.getX() + particleOffsetX;
+        particleSpawnLocationY = owner.getY() + particleOffsetY;
+        weaponSpawnLocationX = owner.getX() + weaponOffsetX;
+        weaponSpawnLocationY = owner.getY() + weaponOffsetY;
+
+        setX(weaponSpawnLocationX);
+        setY(weaponSpawnLocationY);
+        setZ(owner.getZ() + 1);
     }
 
     public void updateFiringDirection() {
@@ -56,7 +84,7 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     public void fire() {
         if (canFire) {
-            world.addGameObject(new Particle(world, this, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
+            world.addGameObject(new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed));
             if (autoFire) {
                 addParticleAlarm();
             }
