@@ -1,13 +1,13 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Wave {
     private ShooterApp world;
-    private int enemyCount, enemiesPerSecond;
+    private int enemyCount;
+    private float enemiesPerSecond;
     private Species[] species;
     private ArrayList<EnemySpawner> spawners = new ArrayList<>();
 
-    public Wave(ShooterApp world, int enemyCount, int enemiesPerSecond, Species[] species) {
+    public Wave(ShooterApp world, int enemyCount, float enemiesPerSecond, Species[] species) {
         this.world = world;
         this.enemyCount = enemyCount;
         this.enemiesPerSecond = enemiesPerSecond;
