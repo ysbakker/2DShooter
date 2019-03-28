@@ -37,7 +37,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             this.living = false;
         }
 
-        if(currentHealth == 0) {
+        if(currentHealth <= 0) {
             world.deleteGameObject(this);
             world.deleteGameObject(healthBar);
             this.living = false;

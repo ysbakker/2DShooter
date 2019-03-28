@@ -9,14 +9,16 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
     private ShooterApp world;
     private Weapon weapon;
 
-    public Particle(ShooterApp world, Weapon weapon, String filename, float xspawn, float yspawn, int[] direction, int particleSpeed) {
+
+
+    public Particle(ShooterApp world, Weapon weapon, String filename, float xspawn, float yspawn, int[] direction, int particleSpeedX, int particleSpeedY) {
         super(new Sprite(filename));
         this.weapon = weapon;
         this.world = world;
         setX(xspawn);
         setY(yspawn);
-        setxSpeed(direction[0] * particleSpeed);
-        setySpeed(direction[1] * particleSpeed);
+        setxSpeed(direction[0] * particleSpeedX);
+        setySpeed(direction[1] * particleSpeedY);
     }
 
     public void update() {

@@ -28,7 +28,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         facingDirection[0] = 1;
         facingDirection[1] = 0;
 
-        currentWeapon = new Pistol(world, this);
+        currentWeapon = new Shotgun(world, this);
         world.addGameObject(currentWeapon);
 
         // Gebruikte toetsen
@@ -76,8 +76,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
         if (isShooting()) {
             currentWeapon.fire();
-        } else if (!isShooting() && !currentWeapon.getAutoFire()) {
-            currentWeapon.setCanFire(true);
         }
     }
 
