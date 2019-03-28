@@ -1,34 +1,47 @@
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
+import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
-import nl.han.ica.oopg.objects.SpriteObject;
 
-import java.util.ArrayList;
-
-public class Weapon extends SpriteObject implements IAlarmListener {
-    private ShooterApp world;
+public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
+    protected ShooterApp world;
 
     // Player owner is de speler die het wapen 'vast' heeft
     // Het wapen kan een projectiel afvuren wat gespawned wordt op de huidige locatie van de speler
     private Player owner;
     protected String particlefn;
 
-    private int[] firingDirection = new int[2]; // [x, y]
-    private boolean canFire = true;
+    protected int[] firingDirection = new int[2]; // [x, y]
+    protected boolean canFire = true;
     protected boolean autoFire;
-    protected double autoFireDelay;
+    protected double fireDelay;
     protected int magSize;
     protected int damage;
     private boolean shootingDelayPassed = true;
 
+    protected int particleSpeed;
+    protected float particleSpawnLocationX;
+    protected float particleSpawnLocationY;
+    private float weaponSpawnLocationX;
+    private float weaponSpawnLocationY;
+    private float weaponZ;
+
+
+    protected float particleOffsetX;
+    protected float particleOffsetY;
+    protected float weaponOffsetX;
+    protected float weaponOffsetY;
+
+    private int currentFrame;
+
     public Weapon(ShooterApp world, Player owner) {
-        super(new Sprite("media/empty.png"));
+        super(new Sprite("media/empty.png"), 2);
         this.world = world;
         this.owner = owner;
     }
 
     public Weapon(ShooterApp world, Player owner, String weaponfn) {
-        super(new Sprite(weaponfn));
+        super(new Sprite(weaponfn), 2);
         this.world = world;
         this.owner = owner;
     }
@@ -36,6 +49,37 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     @Override
     public void update() {
         updateFiringDirection();
+        updateWeaponPosition();
+
+        setCurrentFrameIndex(currentFrame);
+    }
+
+    private void updateWeaponPosition() {
+
+        // wapen naar links
+        if(firingDirection[0] == -1) {
+            currentFrame = 1;
+            weaponZ = owner.getZ() -1;
+            particleSpawnLocationX = owner.getX() - particleOffsetX/4;
+            particleSpawnLocationY = owner.getY() + particleOffsetY;
+            weaponSpawnLocationX = owner.getX() - weaponOffsetX/4;
+            weaponSpawnLocationY = owner.getY() + weaponOffsetY;
+
+        }
+
+        // wapen naar rechts of andere richtingen
+        else  {
+            currentFrame = 0;
+            weaponZ = owner.getZ() +1;
+            particleSpawnLocationX = owner.getX() + particleOffsetX;
+            particleSpawnLocationY = owner.getY() + particleOffsetY;
+            weaponSpawnLocationX = owner.getX() + weaponOffsetX;
+            weaponSpawnLocationY = owner.getY() + weaponOffsetY;
+        }
+
+        setX(weaponSpawnLocationX);
+        setY(weaponSpawnLocationY);
+        setZ(weaponZ);
     }
 
     public void updateFiringDirection() {
@@ -57,11 +101,11 @@ public class Weapon extends SpriteObject implements IAlarmListener {
 
     public void fire() {
         if (autoFire && canFire) {
-            world.addGameObject(new Particle(world, this, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
+            world.addGameObject(new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed));
             addParticleAlarm();
             canFire = false;
         } else if (!autoFire && canFire && shootingDelayPassed) {
-            world.addGameObject(new Particle(world, this, particlefn, owner.getX(), owner.getY() + owner.getHeight() / 2, firingDirection));
+            world.addGameObject(new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed));
             addParticleAlarm();
             canFire = false;
             shootingDelayPassed = false;
@@ -69,7 +113,7 @@ public class Weapon extends SpriteObject implements IAlarmListener {
     }
 
     public void addParticleAlarm() {
-        Alarm nextParticle = new Alarm("Next particle", autoFireDelay);
+        Alarm nextParticle = new Alarm("Next particle", fireDelay);
         nextParticle.addTarget(this);
         nextParticle.start();
     }
