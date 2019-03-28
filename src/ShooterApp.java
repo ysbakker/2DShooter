@@ -69,8 +69,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     public void createWaves() {
-        waves.add(new Wave(this, 5, 1, new Species[]{Species.SKELETON}));
-        waves.add(new Wave(this, 100, 10, new Species[]{Species.SKELETON}));
+        waves.add(new Wave(this, 100, 10, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
     }
 
     public void startDelay() {
