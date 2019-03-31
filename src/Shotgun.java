@@ -20,14 +20,42 @@ public class Shotgun extends Weapon {
         if (!autoFire && canFire && shootingDelayPassed) {
             Particle middleBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed);
             world.addGameObject(middleBullet);
-            if(middleBullet.getySpeed() == 0 ) {
-                Particle topBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed,  - 1);
-                Particle bottomBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, 1);
-                topBullet.setySpeed(-1.5f);
-                bottomBullet.setySpeed(1.5f);
-                world.addGameObject(topBullet);
-                world.addGameObject(bottomBullet);
+
+            Particle topBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed,  particleSpeed);
+            Particle bottomBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed);
+
+            float middleBulletxSpeed = middleBullet.getxSpeed();
+            float middleBulletySpeed = middleBullet.getySpeed();
+
+            float bulletSpread = 1.5f;
+
+            // middle bullet travels horizontically
+            if(middleBulletySpeed == 0 ) {
+                topBullet.setySpeed(-bulletSpread);
+                bottomBullet.setySpeed(bulletSpread);
             }
+
+            // middle bullet travels vertically
+            if(middleBulletxSpeed == 0 ) {
+                topBullet.setxSpeed(-bulletSpread);
+                bottomBullet.setxSpeed(bulletSpread);
+            }
+
+            // middle bullet travels diagonally
+            if(middleBulletxSpeed != 0 && middleBulletySpeed != 0) {
+                // upwards and right
+                if(middleBulletxSpeed > 0 && middleBulletySpeed < 0) {
+                    topBullet.setxSpeed(middleBullet.getxSpeed() - bulletSpread);
+                    topBullet.setySpeed(middleBullet.getySpeed());
+                    bottomBullet.setxSpeed(middleBullet.getxSpeed());
+                    bottomBullet.setySpeed(middleBullet.getySpeed() + bulletSpread);
+                }
+            }
+
+
+
+            world.addGameObject(topBullet);
+            world.addGameObject(bottomBullet);
 
             addParticleAlarm();
             canFire = false;
