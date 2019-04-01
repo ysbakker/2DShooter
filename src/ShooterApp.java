@@ -15,7 +15,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private int waveDelay;
     private boolean delayTriggered;
     private int[] worldBoundaries;
-
+    private Fortress fortress;
     private ArrayList<Wave> waves = new ArrayList<>();
     private int currentWave = 0;
 
@@ -77,6 +77,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
             case IN_GAME:
                 createObjects();
                 createWaves();
+                createFortress();
                 waves.get(currentWave).start();
                 waveDelay = 5;
                 delayTriggered = false;
@@ -101,6 +102,10 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
 
     public void createWaves() {
         waves.add(new Wave(this, 1000, 10, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+    }
+
+    public void createFortress() {
+        fortress = new Fortress(this);
     }
 
     public void startDelay() {

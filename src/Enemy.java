@@ -70,6 +70,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             if (g instanceof Player && this.living) {
                 // Enemy hit player
             }
+            if (g instanceof Fortress) {
+                setxSpeed(0);
+            }
         }
     }
 
