@@ -2,6 +2,7 @@ import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.sound.Sound;
 
 public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
     protected ShooterApp world;
@@ -10,6 +11,7 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
     // Het wapen kan een projectiel afvuren wat gespawned wordt op de huidige locatie van de speler
     private Player owner;
     protected String particlefn;
+    protected Sound weaponSound;
 
     protected int[] firingDirection = new int[2]; // [x, y]
     protected boolean canFire = true;
@@ -103,13 +105,18 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
         if (autoFire && canFire) {
             world.addGameObject(new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed));
             addParticleAlarm();
+            weaponSound.rewind();
+            weaponSound.play();
             canFire = false;
         } else if (!autoFire && canFire && shootingDelayPassed) {
             world.addGameObject(new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed));
             addParticleAlarm();
+            weaponSound.rewind();
+            weaponSound.play();
             canFire = false;
             shootingDelayPassed = false;
         }
+
     }
 
     public void addParticleAlarm() {

@@ -1,3 +1,5 @@
+import nl.han.ica.oopg.sound.Sound;
+
 public class Pistol extends Weapon {
 
     public Pistol(ShooterApp world, Player owner) {
@@ -13,5 +15,6 @@ public class Pistol extends Weapon {
         particleOffsetY = 25;
         weaponOffsetX = 42;
         weaponOffsetY = 25;
+        weaponSound = new Sound(world, "media/weapon1.mp3");
     }
 }

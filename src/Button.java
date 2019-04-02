@@ -1,4 +1,5 @@
 import nl.han.ica.oopg.objects.GameObject;
+import nl.han.ica.oopg.sound.Sound;
 import processing.core.PGraphics;
 
 public class Button extends GameObject {
@@ -8,6 +9,7 @@ public class Button extends GameObject {
     private int color;
     private int defaultWidth = 200;
     private int defaultHeight = 50;
+    private Sound buttonSound;
     private ShooterApp world;
 
     public Button(ShooterApp world, float x, float y, int color, String text, Gamestate targetState) {
@@ -20,6 +22,7 @@ public class Button extends GameObject {
         this.targetState = targetState;
         this.world = world;
         world.addGameObject(this);
+        buttonSound = new Sound(world, "media/button.mp3");
     }
 
     public Button(ShooterApp world, float x, float y, int width, int height, int color, String text, Gamestate targetState) {
@@ -32,6 +35,7 @@ public class Button extends GameObject {
         this.targetState = targetState;
         this.world = world;
         world.addGameObject(this);
+        buttonSound = new Sound(world, "media/button.mp3");
     }
 
     @Override
@@ -45,6 +49,10 @@ public class Button extends GameObject {
 
     public Gamestate getGameState(){
         return targetState;
+    }
+
+    public void playSound(){
+        buttonSound.play();
     }
 
     @Override

@@ -1,3 +1,5 @@
+import nl.han.ica.oopg.sound.Sound;
+
 public class Shotgun extends Weapon {
 
     public Shotgun(ShooterApp world, Player owner) {
@@ -13,6 +15,8 @@ public class Shotgun extends Weapon {
         particleOffsetY = 33;
         weaponOffsetX = 20;
         weaponOffsetY = 30;
+
+        weaponSound = new Sound(world, "media/weapon2.mp3");
     }
 
     @Override
@@ -20,7 +24,8 @@ public class Shotgun extends Weapon {
         if (!autoFire && canFire && shootingDelayPassed) {
             Particle middleBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed);
             world.addGameObject(middleBullet);
-
+            weaponSound.rewind();
+            weaponSound.play();
             Particle topBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed,  particleSpeed);
             Particle bottomBullet = new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed);
 

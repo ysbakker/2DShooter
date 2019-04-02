@@ -2,6 +2,7 @@
 import nl.han.ica.oopg.alarm.Alarm;
 import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.engine.GameEngine;
+import nl.han.ica.oopg.sound.Sound;
 import nl.han.ica.oopg.view.View;
 import processing.core.PApplet;
 
@@ -12,6 +13,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private EnemySpawner enemySpawner;
     private Gamestate state;
     private Menu mainMenu;
+    private Sound backgroundSound;
     private int waveDelay;
     private boolean delayTriggered = true;
     private int[] worldBoundaries;
@@ -28,7 +30,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     public void setupGame() {
         int worldWidth = 849;
         int worldHeight = 500;
-
+        initializeSound();
         worldBoundaries = new int[]{0, 10, 849, 450}; // xmin, ymin, xmax, ymax
         createViewWithoutViewport(worldWidth, worldHeight);
 
@@ -125,5 +127,10 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
             case IN_GAME:
                 break;
         }
+    }
+
+    private void initializeSound() {
+        backgroundSound = new Sound(this, "media/bg_music.mp3");
+        backgroundSound.loop(-1);
     }
 }
