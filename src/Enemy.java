@@ -5,13 +5,13 @@ import nl.han.ica.oopg.objects.Sprite;
 
 import java.util.List;
 
-public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects {
+public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects, EntityWithHealth{
     private ShooterApp world;
     private int currentFrame;
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
-    protected int attackDamage;
+    protected float attackDamage;
     protected float walkingSpeed;
     private boolean living;
     private float previousX;
@@ -30,7 +30,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     public void attack(GameObject g) {
         if(g instanceof Fortress) {
             Fortress fortress = ((Fortress) g);
-            fortress.setFortressHealth(fortress.getFortressHealth() - attackDamage);
+            if(fortress.getCurrentHealth() > 0) {
+                fortress.setCurrentHealth(fortress.getCurrentHealth() - attackDamage);
+            }
         }
     }
 
@@ -77,7 +79,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             if (g instanceof Player && this.living) {
                 // Enemy hit player
             }
-            if (g instanceof Fortress) {
+            if (g instanceof Fortress && this.living) {
                 setxSpeed(0);
                 attack(g);
             }
