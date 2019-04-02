@@ -1,5 +1,4 @@
 import nl.han.ica.oopg.dashboard.Dashboard;
-import nl.han.ica.oopg.objects.Sprite;
 import processing.core.PGraphics;
 import processing.core.PImage;
 
