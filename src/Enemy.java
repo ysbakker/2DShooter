@@ -2,6 +2,7 @@ import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
+import nl.han.ica.oopg.sound.Sound;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     private boolean living;
     private float previousX;
     private int despawnCounter = 100;
+    private Sound hitSound;
+    private Sound deathSound;
+    private Sound spawnSound;
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
@@ -23,13 +27,22 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         currentFrame = 1;
         living = true;
         previousX = world.getWorldBoundaries()[2];
+        hitSound = new Sound(world, "media/enemy_loses_hp.mp3");
+        deathSound = new Sound(world, "media/enemy_dies.mp3");
+        spawnSound = new Sound(world, "media/enemy_spawns.mp3");
+        spawnSound.play();
     }
 
     public abstract void attack();
 
     @Override
     public void update() {
-        if (getX() + getWidth() <= world.getWorldBoundaries()[0] || currentHealth <= 0) {
+        if (getX() + getWidth() <= world.getWorldBoundaries()[0]) {
+            this.living = false;
+        }
+
+        if(currentHealth <= 0 && living){
+            deathSound.play();
             this.living = false;
         }
 
@@ -66,6 +79,8 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             if (g instanceof Particle && this.living) {
                 Weapon weapon = ((Particle) g).getWeapon();
                 currentHealth -= weapon.getDamage();
+                hitSound.rewind();
+                hitSound.play();
             }
             if (g instanceof Player && this.living) {
                 // Enemy hit player
