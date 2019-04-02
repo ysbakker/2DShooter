@@ -11,8 +11,4 @@ public class SkeletonFlame extends Enemy {
         setxSpeed(-walkingSpeed);
     }
 
-    @Override
-    public void attack() {
-
-    }
 }

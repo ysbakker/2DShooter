@@ -1,15 +1,18 @@
+import nl.han.ica.oopg.collision.ICollidableWithGameObjects;
 import nl.han.ica.oopg.objects.GameObject;
 import processing.core.PGraphics;
 
-public class Fortress extends GameObject {
+import java.util.List;
+
+public class Fortress extends GameObject implements ICollidableWithGameObjects {
     private ShooterApp world;
-    private float x = 0;
-    private float y = 0;
+    private int fortressHealth;
 
     public Fortress(ShooterApp world) {
         this.world = world;
-        setX(x);
-        setY(y);
+        this.fortressHealth = 1000;
+        setX(0);
+        setY(0);
         setHeight(world.getHeight());
         setWidth(110);
 
@@ -24,7 +27,24 @@ public class Fortress extends GameObject {
 
     @Override
     public void update() {
+        System.out.println(fortressHealth);
+    }
 
+    @Override
+    public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+        for (GameObject g : collidedGameObjects) {
+            if(g instanceof Enemy) {
+
+            }
+        }
+    }
+
+    public void setFortressHealth(int health) {
+        this.fortressHealth = health;
+    }
+
+    public int getFortressHealth() {
+        return fortressHealth;
     }
 
 

@@ -11,10 +11,12 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
+    protected int attackDamage;
     protected float walkingSpeed;
     private boolean living;
     private float previousX;
     private int despawnCounter = 100;
+
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
@@ -25,7 +27,12 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         previousX = world.getWorldBoundaries()[2];
     }
 
-    public abstract void attack();
+    public void attack(GameObject g) {
+        if(g instanceof Fortress) {
+            Fortress fortress = ((Fortress) g);
+            fortress.setFortressHealth(fortress.getFortressHealth() - attackDamage);
+        }
+    }
 
     @Override
     public void update() {
@@ -72,6 +79,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             }
             if (g instanceof Fortress) {
                 setxSpeed(0);
+                attack(g);
             }
         }
     }
