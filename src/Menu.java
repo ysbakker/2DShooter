@@ -1,5 +1,4 @@
 import nl.han.ica.oopg.dashboard.Dashboard;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PImage;
 
