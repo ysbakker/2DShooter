@@ -4,11 +4,12 @@ import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.objects.SpriteObject;
 
 import java.util.List;
+import processing.core.PGraphics;
 
 public class Particle extends SpriteObject implements ICollidableWithGameObjects {
     private ShooterApp world;
     private Weapon weapon;
-
+    private float rotationAngle = 0;
 
 
     public Particle(ShooterApp world, Weapon weapon, String filename, float xspawn, float yspawn, int[] direction, int particleSpeedX, int particleSpeedY) {
@@ -19,6 +20,15 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
         setY(yspawn);
         setxSpeed(direction[0] * particleSpeedX);
         setySpeed(direction[1] * particleSpeedY);
+    }
+
+    @Override
+    public void draw(PGraphics g) {
+        g.pushMatrix();
+        g.translate(getCenterX(), getCenterY());
+        g.rotate(world.radians(rotationAngle));
+        g.image(getImage(), -width / 2, -height / 2);
+        g.popMatrix();
     }
 
     public void update() {
@@ -42,5 +52,9 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
 
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    public void setRotation(float angle) {
+        rotationAngle = angle;
     }
 }
