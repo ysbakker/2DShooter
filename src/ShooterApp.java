@@ -32,7 +32,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
         createViewWithoutViewport(worldWidth, worldHeight);
 
-        this.setGameState(Gamestate.IN_GAME);
+        this.setGameState(Gamestate.MAIN_MENU);
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -59,6 +59,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
                 }
                 break;
             case QUIT_GAME:
+                System.exit(0);
                 break;
             case PAUSE_GAME:
                 break;
@@ -113,5 +114,15 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         currentWave++;
         waves.get(currentWave).start();
         delayTriggered = false;
+    }
+
+    public void mouseClicked(){
+        switch (state){
+            case MAIN_MENU:
+                setGameState(mainMenu.getButton(mouseX, mouseY));
+                break;
+            case IN_GAME:
+                break;
+        }
     }
 }
