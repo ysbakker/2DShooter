@@ -63,8 +63,6 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
                 break;
             case PAUSE_GAME:
                 break;
-            case HIGH_SCORES:
-                break;
         }
     }
 
@@ -85,8 +83,6 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
             case QUIT_GAME:
                 break;
             case PAUSE_GAME:
-                break;
-            case HIGH_SCORES:
                 break;
         }
     }
