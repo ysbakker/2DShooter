@@ -1,4 +1,5 @@
 import nl.han.ica.oopg.dashboard.Dashboard;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PImage;
 
@@ -43,5 +44,7 @@ public class Menu extends Dashboard {
             btn.draw(g);
         }
         g.image(logo, (this.width/2)-logoWidth/2, this.y, logoWidth, logoHeight);
+        g.textAlign(CENTER, CENTER);
+        g.text("sound by Timo Jansen", width/2, height-50);
     }
 }
