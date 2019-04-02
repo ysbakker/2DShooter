@@ -13,11 +13,11 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private Gamestate state;
     private Menu mainMenu;
     private int waveDelay;
-    private boolean delayTriggered;
+    private boolean delayTriggered = true;
     private int[] worldBoundaries;
 
     private ArrayList<Wave> waves = new ArrayList<>();
-    private int currentWave = 0;
+    private int currentWave = -1;
 
     public static void main(String[] args) {
         ShooterApp app = new ShooterApp();
@@ -29,7 +29,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         int worldWidth = 849;
         int worldHeight = 500;
 
-        worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
+        worldBoundaries = new int[]{0, 10, 849, 450}; // xmin, ymin, xmax, ymax
         createViewWithoutViewport(worldWidth, worldHeight);
 
         this.setGameState(Gamestate.IN_GAME);
@@ -44,14 +44,14 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     public void update() {
-        switch (state){
+        switch (state) {
             case MAIN_MENU:
                 break;
             case IN_GAME:
-                if (waves.get(currentWave).allEnemiesSpawned()) {
-                    waves.get(currentWave).stopSpawning();
-                    if (waves.get(currentWave).allEnemiesKilled()) {
-                        if (currentWave < waves.size() - 1 && !delayTriggered) {
+                if (currentWave < waves.size() - 1 && !delayTriggered) {
+                    if (waves.get(currentWave).allEnemiesSpawned()) {
+                        waves.get(currentWave).stopSpawning();
+                        if (waves.get(currentWave).allEnemiesKilled()) {
                             startDelay();
                             delayTriggered = true;
                         }
@@ -69,7 +69,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
 
     private void setGameState(Gamestate state) {
         this.state = state;
-        switch (state){
+        switch (state) {
             case MAIN_MENU:
                 mainMenu = new Menu(this);
                 this.addGameObject(mainMenu);
@@ -77,9 +77,9 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
             case IN_GAME:
                 createObjects();
                 createWaves();
-                waves.get(currentWave).start();
-                waveDelay = 5;
-                delayTriggered = false;
+                waveDelay = 2;
+                delayTriggered = true;
+                startDelay();
                 break;
             case QUIT_GAME:
                 break;
@@ -100,7 +100,12 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     public void createWaves() {
-        waves.add(new Wave(this, 1000, 10, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
     }
 
     public void startDelay() {
@@ -111,7 +116,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
 
     public void triggerAlarm(String s) {
         currentWave++;
-        waves.get(currentWave).start();
+        waves.get(currentWave).start(currentWave + 1);
         delayTriggered = false;
     }
 }
