@@ -16,8 +16,7 @@ public class Menu extends Dashboard {
         super(0,0, world.getWidth(), world.getHeight());
         this.world = world;
         logo = world.loadImage("media/logo.png", "png");
-        buttons.add(new Button(world, this, this.width/2, this.height/2 -75, 200, 50, 0xFF4E9544, "Start Game", Gamestate.IN_GAME));
-        buttons.add(new Button(world, this, this.width/2, this.height/2 , 200, 50, 0xFFADA537, "Credits", Gamestate.QUIT_GAME));
+        buttons.add(new Button(world, this, this.width/2, this.height/2 , 200, 50, 0xFF4E9544, "Start Game", Gamestate.IN_GAME));
         buttons.add(new Button(world, this, this.width/2, this.height/2 + 75, 200, 50, 0xFFDF342F, "Quit", Gamestate.QUIT_GAME));
     }
 
