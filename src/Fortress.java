@@ -25,7 +25,7 @@ public class Fortress extends GameObject implements ICollidableWithGameObjects, 
         setWidth(110);
 
         healthBar = new HealthBar(this, world);
-        healthBar.setHealthBarPosition(15,8, 100, 15);
+        healthBar.setHealthBarPosition(10,8, 80, 15);
 
         fortressWall = world.loadImage("media/sprite_fortress_wall.png");
         treasureChest = world.loadImage("media/sprite_treasure_chest.png");

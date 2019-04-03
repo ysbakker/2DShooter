@@ -29,7 +29,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         int worldWidth = 849;
         int worldHeight = 500;
 
-        worldBoundaries = new int[]{0,10,849,450}; // xmin, ymin, xmax, ymax
+        worldBoundaries = new int[]{105,10,849,450}; // xmin, ymin, xmax, ymax
         createViewWithoutViewport(worldWidth, worldHeight);
 
         this.setGameState(Gamestate.IN_GAME);
