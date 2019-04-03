@@ -17,7 +17,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private int waveDelay;
     private boolean delayTriggered = true;
     private int[] worldBoundaries;
-
+    private Fortress fortress;
     private ArrayList<Wave> waves = new ArrayList<>();
     private int currentWave = -1;
 
@@ -31,7 +31,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         int worldWidth = 849;
         int worldHeight = 500;
         initializeSound();
-        worldBoundaries = new int[]{0, 10, 849, 450}; // xmin, ymin, xmax, ymax
+        worldBoundaries = new int[]{105,10,849,450}; // xmin, ymin, xmax, ymax
         createViewWithoutViewport(worldWidth, worldHeight);
 
         this.setGameState(Gamestate.MAIN_MENU);
@@ -81,6 +81,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
                 waveDelay = 2;
                 delayTriggered = true;
                 startDelay();
+                createFortress();
                 break;
             case QUIT_GAME:
                 break;
@@ -105,6 +106,10 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
         waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
         waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+    }
+
+    public void createFortress() {
+        fortress = new Fortress(this);
     }
 
     public void startDelay() {

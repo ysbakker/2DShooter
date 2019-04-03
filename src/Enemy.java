@@ -6,12 +6,13 @@ import nl.han.ica.oopg.sound.Sound;
 
 import java.util.List;
 
-public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects {
+public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects, EntityWithHealth{
     private ShooterApp world;
     private int currentFrame;
     protected float maxHealth;
     protected float currentHealth;
     protected HealthBar healthBar;
+    protected float attackDamage;
     protected float walkingSpeed;
     private boolean living;
     private float previousX;
@@ -19,6 +20,7 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     private Sound hitSound;
     private Sound deathSound;
     private Sound spawnSound;
+
 
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
@@ -33,7 +35,14 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         spawnSound.play();
     }
 
-    public abstract void attack();
+    public void attack(GameObject g) {
+        if(g instanceof Fortress) {
+            Fortress fortress = ((Fortress) g);
+            if(fortress.getCurrentHealth() > 0) {
+                fortress.setCurrentHealth(fortress.getCurrentHealth() - attackDamage);
+            }
+        }
+    }
 
     @Override
     public void update() {
@@ -84,6 +93,10 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
             }
             if (g instanceof Player && this.living) {
                 // Enemy hit player
+            }
+            if (g instanceof Fortress && this.living) {
+                setxSpeed(0);
+                attack(g);
             }
         }
     }

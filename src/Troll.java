@@ -11,8 +11,5 @@ public class Troll extends Enemy {
         setxSpeed(-walkingSpeed);
     }
 
-    @Override
-    public void attack() {
 
-    }
 }

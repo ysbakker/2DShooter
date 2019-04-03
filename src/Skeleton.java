@@ -1,3 +1,4 @@
+import nl.han.ica.oopg.objects.GameObject;
 import nl.han.ica.oopg.objects.Sprite;
 
 public class Skeleton extends Enemy {
@@ -9,11 +10,9 @@ public class Skeleton extends Enemy {
         maxHealth = 10;
         currentHealth = maxHealth;
         walkingSpeed = world.random(walkingSpeed-0.3F, walkingSpeed+0.3F);
+        attackDamage = 1;
         setxSpeed(-walkingSpeed);
     }
 
-    @Override
-    public void attack() {
 
-    }
 }
