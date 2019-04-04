@@ -1,6 +1,9 @@
+/**
+ * Typen wapens in ShooterApp
+ */
 public enum WeaponType {
     ROCK,
     PISTOL,
     SHOTGUN,
-    SHOTGUN_AUTO
+    AUTOSHOTGUN
 }

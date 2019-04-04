@@ -2,6 +2,12 @@ import nl.han.ica.oopg.sound.Sound;
 
 public class Shotgun extends Weapon {
 
+    /** Weapon -> Shotgun
+     * Maakt shotgun aan
+     *
+     * @param world huidige wereld
+     * @param owner eigenaar wapen
+     */
     public Shotgun(ShooterApp world, Player owner) {
         super(world, owner, "media/sprite_shotgun.png");
         autoFire = false;
@@ -19,6 +25,11 @@ public class Shotgun extends Weapon {
         weaponSound = new Sound(world, "media/weapon2.mp3");
     }
 
+
+    /**
+     * Shotgun heeft haar eigen fire()-functie.
+     * Dit omdat de shotgun 3 particles in één keer afschiet.
+     */
     @Override
     public void fire() {
         if (!autoFire && canFire && shootingDelayPassed) {

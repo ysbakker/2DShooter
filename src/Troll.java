@@ -1,6 +1,11 @@
 import nl.han.ica.oopg.objects.Sprite;
 
 public class Troll extends Enemy {
+    /** Enemy -> Troll
+     * Maakt nieuwe troll aan
+     *
+     * @param world huidige wereld
+     */
     public Troll(ShooterApp world) {
         super(world, new Sprite("media/sprite_troll.png"), 9);
 

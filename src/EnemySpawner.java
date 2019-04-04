@@ -13,6 +13,11 @@ public class EnemySpawner implements IAlarmListener {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private boolean isStopped = false;
 
+    /** Maak enemyspawner aan
+     * @param world huidige wereld
+     * @param enemiesPerSecond hoeveel enemies per seconde
+     * @param type array van typen enemies
+     */
     public EnemySpawner(ShooterApp world, float enemiesPerSecond, Species type){
         this.enemiesPerSecond = enemiesPerSecond;
         this.world = world;
@@ -48,10 +53,16 @@ public class EnemySpawner implements IAlarmListener {
         }
     }
 
+    /**
+     * @return hoeveel enemies de spawner heeft gespawnt
+     */
     public int getEnemiesSpawned() {
         return enemiesSpawned;
     }
 
+    /**
+     * @return of alle enemies dood zijn
+     */
     public boolean allEnemiesDead() {
         for (Enemy e: enemies) {
             if (e.getLiving()) {
@@ -61,6 +72,9 @@ public class EnemySpawner implements IAlarmListener {
         return true;
     }
 
+    /**
+     * stopt de spawner
+     */
     public void stop() {
         isStopped = true;
     }

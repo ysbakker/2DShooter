@@ -1,6 +1,11 @@
 import nl.han.ica.oopg.objects.Sprite;
 
 public class SkeletonFlame extends Enemy {
+    /** Enemy -> SkeletonFlame
+     * Maakt nieuwe Flame Skeleton aan
+     *
+     * @param world huidige wereld
+     */
     public SkeletonFlame(ShooterApp world) {
         super(world, new Sprite("media/sprite_skeleton_flame.png"), 9);
 

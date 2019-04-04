@@ -12,6 +12,15 @@ public class Button extends GameObject {
     private int defaultHeight = 50;
     private Sound buttonSound;
 
+    /** creert knop met standaard hoogte
+     * @param world huidige wereld
+     * @param menu van welk dashboard de knop deel uitmaakt
+     * @param x x-positie
+     * @param y y-positie
+     * @param color kleur
+     * @param text tekst in knop
+     * @param targetState welke toestand de knop het spel in zet
+     */
     public Button(ShooterApp world, Dashboard menu, float x, float y, int color, String text, Gamestate targetState) {
         setHeight(defaultHeight);
         setWidth(defaultWidth);
@@ -24,6 +33,17 @@ public class Button extends GameObject {
         buttonSound = new Sound(world, "media/button.mp3");
     }
 
+    /**
+     * @param world huidige wereld
+     * @param menu van welk dashboard de knop deel uitmaakt
+     * @param x x-positie
+     * @param y y-positie
+     * @param width breedte knop
+     * @param height hoogte knop
+     * @param color kleur
+     * @param text tekst in knop
+     * @param targetState welke toestand de knop het spel in zet
+     */
     public Button(ShooterApp world, Dashboard menu, float x, float y, int width, int height, int color, String text, Gamestate targetState) {
         setHeight(height);
         setWidth(width);
@@ -41,10 +61,18 @@ public class Button extends GameObject {
 
     }
 
+    /**
+     * @param x x-positie om te vergelijken
+     * @param y y-positie om te vergelijken
+     * @return true als x en y 'binnen' knop is
+     */
     public boolean isOverButton(float x, float y) {
         return x >= this.x && x <= (this.x + this.width) && y >= this.y && y <= (this.y + this.height);
     }
 
+    /**
+     * @return welke toestand het spel in gezet moet worden
+     */
     public Gamestate getGameState(){
         return targetState;
     }

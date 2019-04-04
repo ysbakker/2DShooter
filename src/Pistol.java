@@ -2,6 +2,12 @@ import nl.han.ica.oopg.sound.Sound;
 
 public class Pistol extends Weapon {
 
+    /** Weapon -> Pistol
+     * Maakt een pistool aan
+     *
+     * @param world huidige wereld
+     * @param owner eigenaar wapen
+     */
     public Pistol(ShooterApp world, Player owner) {
         super(world, owner, "media/sprite_pistol.png");
         autoFire = true;

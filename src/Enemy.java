@@ -6,6 +6,9 @@ import nl.han.ica.oopg.sound.Sound;
 
 import java.util.List;
 
+/**
+ *
+ */
 public abstract class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects, EntityWithHealth{
     private ShooterApp world;
     private int currentFrame;
@@ -22,6 +25,11 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
     private Sound spawnSound;
 
 
+    /** Creert enemy
+     * @param world huidige wereld
+     * @param sprite welke afbeelding de enemy heeft
+     * @param totalFrames hoeveel frames de afbeelding heeft
+     */
     public Enemy(ShooterApp world, Sprite sprite, int totalFrames) {
         super(sprite, totalFrames);
         this.world = world;
@@ -35,6 +43,9 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         spawnSound.play();
     }
 
+    /** de 'aanval'-functie, doet damage op de fortress
+     * @param g welk gameobject collide
+     */
     public void attack(GameObject g) {
         if(g instanceof Fortress) {
             Fortress fortress = ((Fortress) g);
@@ -101,14 +112,24 @@ public abstract class Enemy extends AnimatedSpriteObject implements ICollidableW
         }
     }
 
+    /**
+     * @return de maximale levens van de enemy
+     */
     public float getMaxHealth() {
         return maxHealth;
     }
 
-    public float getCurrentHealth() {
+    /**
+     * @return de huidige levens van de enemy
+     */
+    public float
+    getCurrentHealth() {
         return currentHealth;
     }
 
+    /**
+     * @return of de enemy leeft of niet
+     */
     public boolean getLiving() {
         return living;
     }

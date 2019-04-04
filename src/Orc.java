@@ -1,6 +1,11 @@
 import nl.han.ica.oopg.objects.Sprite;
 
 public class Orc extends Enemy {
+    /** Enemy -> Orc
+     * Maakt nieuwe orc aan
+     *
+     * @param world huidige wereld
+     */
     public Orc(ShooterApp world) {
         super(world, new Sprite("media/sprite_orc.png"), 9);
 

@@ -38,6 +38,10 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         setGameState(Gamestate.MAIN_MENU);
     }
 
+    /** Maakt view aan zonder scroll
+     * @param screenWidth breedte scherm
+     * @param screenHeight hoogte scherm
+     */
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
         View view = new View(screenWidth, screenHeight);
         view.setBackground(loadImage("media/scene.png"));
@@ -82,6 +86,9 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         }
     }
 
+    /** zet de huidige gamestate
+     * @param state staat waar gamestate op gezet moet worden
+     */
     private void setGameState(Gamestate state) {
         this.state = state;
         switch (state) {
@@ -97,12 +104,18 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         }
     }
 
+    /**
+     * Verwijdert alle gameobjects
+     */
     private void clearView() {
         this.deleteAllGameOBjects();
         clearWaves();
         initialized = false;
     }
 
+    /**
+     * Start het spel, maakt waves, speler en fortress aan. Start bij wave -1 -> 0.
+     */
     private void startGame() {
         currentWave = -1;
         createObjects();
@@ -113,15 +126,24 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         initialized = true;
     }
 
+    /**
+     * Maakt speler aan
+     */
     private void createObjects() {
         player = new Player(this);
         addGameObject(player, 100, 100);
     }
 
+    /**
+     * @return huidige wereldgrenzen
+     */
     public int[] getWorldBoundaries() {
         return worldBoundaries;
     }
 
+    /**
+     * Maakt voorgedefinieerde waves aan
+     */
     private void createWaves() {
         waves.add(new Wave(this, player, WeaponType.ROCK, 1, 1, new Species[]{Species.SKELETON}));
         waves.add(new Wave(this, player, WeaponType.ROCK, 5, 1, new Species[]{Species.SKELETON}));
@@ -141,16 +163,22 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         waves.add(new Wave(this, player, WeaponType.SHOTGUN, 5, 1, new Species[]{Species.SKELETON_FLAME}));
         waves.add(new Wave(this, player, WeaponType.SHOTGUN, 7, 2, new Species[]{Species.SKELETON_FLAME, Species.SKELETON}));
         waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 2, new Species[]{Species.ORC}));
-        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 3, new Species[]{Species.TROLL}));
-        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 7, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL, Species.SKELETON_FLAME}));
-        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL, Species.SKELETON_FLAME}));
-        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 10, new Species[]{Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.AUTOSHOTGUN, 10, 3, new Species[]{Species.TROLL}));
+        waves.add(new Wave(this, player, WeaponType.AUTOSHOTGUN, 7, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.AUTOSHOTGUN, 10, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.AUTOSHOTGUN, 35, 10, new Species[]{Species.ORC}));
     }
 
+    /**
+     * Maakt waves leeg zodat ze weer gevuld kunnen worden
+     */
     private void clearWaves() {
         waves.clear();
     }
 
+    /**
+     * Maakt het kasteel aan
+     */
     private void createFortress() {
         fortress = new Fortress(this);
     }

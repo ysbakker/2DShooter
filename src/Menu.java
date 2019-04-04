@@ -12,6 +12,9 @@ public class Menu extends Dashboard {
     private float logoWidth = 200;
     private float logoHeight = 200;
 
+    /** maakt een menu aan
+     * @param world huidige wereld
+     */
     public Menu(ShooterApp world) {
         super(0,0, world.getWidth(), world.getHeight());
         this.world = world;
@@ -25,6 +28,11 @@ public class Menu extends Dashboard {
 
     }
 
+    /**
+     * @param x x-positie
+     * @param y y-positie
+     * @return gamestate van de knop
+     */
     public Gamestate getButton(float x, float y){
         for(Button btn : buttons){
             if(btn.isOverButton(x,y)){

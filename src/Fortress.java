@@ -15,6 +15,9 @@ public class Fortress extends GameObject implements ICollidableWithGameObjects, 
     private PImage goldPile;
     private PImage diamond;
 
+    /** Maakt een fortress aan (1x per wereld)
+     * @param world huidige wereld
+     */
     public Fortress(ShooterApp world) {
         this.world = world;
         currentHealth = 1000;
@@ -63,18 +66,30 @@ public class Fortress extends GameObject implements ICollidableWithGameObjects, 
         }
     }
 
+    /** zet huidige levens
+     * @param health levens
+     */
     public void setCurrentHealth(float health) {
         currentHealth = health;
     }
 
+    /**
+     * @return huidige levens
+     */
     public float getCurrentHealth() {
         return currentHealth;
     }
 
+    /**
+     * @return maximale levens
+     */
     public float getMaxHealth() {
         return maxHealth;
     }
 
+    /**
+     * @return of de fortress kapot is
+     */
     public boolean isDestroyed() {
         return currentHealth <= 0;
     }

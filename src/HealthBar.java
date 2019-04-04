@@ -14,6 +14,10 @@ public class HealthBar extends GameObject {
     private boolean fixedPosition;
 
 
+    /** Maakt een healthbar aan voor een eigenaar (EntityWithHealth)
+     * @param owner eigenaar healthbar
+     * @param world huidige wereld
+     */
     public HealthBar(GameObject owner, ShooterApp world) {
         this.owner = owner;
         fixedPosition = false;
@@ -45,6 +49,12 @@ public class HealthBar extends GameObject {
 
     }
 
+    /** Update de huidige positie van de HealthBar
+     * @param x x-positie
+     * @param y y-positie
+     * @param width breedte
+     * @param height hoogte
+     */
     public void setHealthBarPosition(float x, float y, float width, float height) {
         missingHealthBarX = x;
         missingHealthBarY = y;

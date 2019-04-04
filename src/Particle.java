@@ -11,7 +11,16 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
     private Weapon weapon;
     private float rotationAngle = 0;
 
-
+    /** Maakt een particle aan (SpriteObject)
+     * @param world huidige wereld
+     * @param weapon wapen waar het particle vandaan komt
+     * @param filename sprite van de particle
+     * @param xspawn x-positie waar het particle spawnt
+     * @param yspawn y-positie waar het particle spawnt
+     * @param direction welke kant het particle op gaat
+     * @param particleSpeedX x-snelheid particle
+     * @param particleSpeedY y-snelheid particle
+     */
     public Particle(ShooterApp world, Weapon weapon, String filename, float xspawn, float yspawn, int[] direction, int particleSpeedX, int particleSpeedY) {
         super(new Sprite(filename));
         this.weapon = weapon;
@@ -37,6 +46,11 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
         }
     }
 
+    /**
+     * @param xmax x-boundary
+     * @param ymax y-boundary
+     * @return of de particle uit de world bounds is
+     */
     public boolean isParticleOutOfBounds(float xmax, float ymax) {
         return getX() >= xmax || getY() >= ymax || getX() + getWidth() < 0 || getY() + getHeight() < 0;
     }
@@ -50,10 +64,16 @@ public class Particle extends SpriteObject implements ICollidableWithGameObjects
         }
     }
 
+    /**
+     * @return het wapen wat de particle afschiet
+     */
     public Weapon getWeapon() {
         return weapon;
     }
 
+    /**
+     * @param angle zet de rotatie van de particle
+     */
     public void setRotation(float angle) {
         rotationAngle = angle;
     }

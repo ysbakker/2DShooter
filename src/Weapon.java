@@ -4,7 +4,7 @@ import nl.han.ica.oopg.objects.AnimatedSpriteObject;
 import nl.han.ica.oopg.objects.Sprite;
 import nl.han.ica.oopg.sound.Sound;
 
-public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
+public abstract class Weapon extends AnimatedSpriteObject implements IAlarmListener {
     protected ShooterApp world;
 
     // Player owner is de speler die het wapen 'vast' heeft
@@ -36,12 +36,21 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
 
     private int currentFrame;
 
+    /** Maakt nieuw wapen aan zonder sprite
+     * @param world huidige wereld
+     * @param owner eigenaar wapen
+     */
     public Weapon(ShooterApp world, Player owner) {
         super(new Sprite("media/empty.png"), 2);
         this.world = world;
         this.owner = owner;
     }
 
+    /** Maakt nieuw wapen aan mét sprite
+     * @param world huidige wereld
+     * @param owner eigenaar wapen
+     * @param weaponfn filename wapensprite
+     */
     public Weapon(ShooterApp world, Player owner, String weaponfn) {
         super(new Sprite(weaponfn), 2);
         this.world = world;
@@ -56,6 +65,9 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
         setCurrentFrameIndex(currentFrame);
     }
 
+    /**
+     * update constant de positie van het wapen gebaseerd op de positie van de speler
+     */
     private void updateWeaponPosition() {
 
         // wapen naar links
@@ -84,6 +96,9 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
         setZ(weaponZ);
     }
 
+    /**
+     * update constant de schietrichting van het wapen gebaseerd op de looprichting van de speler.
+     */
     public void updateFiringDirection() {
         if (!owner.isWalking()) {
             if (owner.getFacingDirection()[0] == -1) {
@@ -101,6 +116,9 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
         }
     }
 
+    /**
+     * Standaard fire()-functie: moet overschreven worden bij het afvuren van meerdere Particles.
+     */
     public void fire() {
         if (autoFire && canFire) {
             world.addGameObject(new Particle(world, this, particlefn, particleSpawnLocationX, particleSpawnLocationY, firingDirection, particleSpeed, particleSpeed));
@@ -133,14 +151,23 @@ public class Weapon extends AnimatedSpriteObject implements IAlarmListener {
         }
     }
 
+    /** stel in of wapen momenteel kan vuren
+     * @param val true / false
+     */
     public void setCanFire(boolean val) {
         canFire = val;
     }
 
+    /**
+     * @return of het wapen autoFire ondersteunt
+     */
     public boolean getAutoFire() {
         return autoFire;
     }
 
+    /**
+     * @return de hoeveelheid damage die een wapen doet
+     */
     public int getDamage() {
         return damage;
     }
