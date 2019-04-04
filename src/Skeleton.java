@@ -10,7 +10,7 @@ public class Skeleton extends Enemy {
         maxHealth = 10;
         currentHealth = maxHealth;
         walkingSpeed = world.random(walkingSpeed-0.3F, walkingSpeed+0.3F);
-        attackDamage = 1;
+        attackDamage = 0.1F;
         setxSpeed(-walkingSpeed);
     }
 

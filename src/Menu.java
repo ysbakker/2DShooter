@@ -28,7 +28,6 @@ public class Menu extends Dashboard {
     public Gamestate getButton(float x, float y){
         for(Button btn : buttons){
             if(btn.isOverButton(x,y)){
-                world.deleteGameObject(this);
                 btn.playSound();
                 return btn.getGameState();
             }

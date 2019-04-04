@@ -8,6 +8,7 @@ public class SkeletonFlame extends Enemy {
         maxHealth = 50;
         currentHealth = maxHealth;
         walkingSpeed = world.random(walkingSpeed-0.3F, walkingSpeed+0.3F);
+        attackDamage = 1;
         setxSpeed(-walkingSpeed);
     }
 

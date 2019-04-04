@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class ShooterApp extends GameEngine implements IAlarmListener {
     private Player player;
-    private EnemySpawner enemySpawner;
     private Gamestate state;
     private Menu mainMenu;
     private Sound backgroundSound;
@@ -19,7 +18,8 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     private int[] worldBoundaries;
     private Fortress fortress;
     private ArrayList<Wave> waves = new ArrayList<>();
-    private int currentWave = -1;
+    private int currentWave;
+    private boolean initialized = false;
 
     public static void main(String[] args) {
         ShooterApp app = new ShooterApp();
@@ -31,10 +31,11 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         int worldWidth = 849;
         int worldHeight = 500;
         initializeSound();
-        worldBoundaries = new int[]{105,10,849,450}; // xmin, ymin, xmax, ymax
+        worldBoundaries = new int[]{105,10,worldWidth,worldHeight - 50}; // xmin, ymin, xmax, ymax
+        waveDelay = 2;
         createViewWithoutViewport(worldWidth, worldHeight);
 
-        this.setGameState(Gamestate.MAIN_MENU);
+        setGameState(Gamestate.MAIN_MENU);
     }
 
     private void createViewWithoutViewport(int screenWidth, int screenHeight) {
@@ -50,6 +51,13 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
             case MAIN_MENU:
                 break;
             case IN_GAME:
+                if (!initialized) {
+                    return;
+                }
+                if (fortress.isDestroyed()) {
+                    setGameState(Gamestate.MAIN_MENU);
+                    return;
+                }
                 if (currentWave < waves.size() - 1 && !delayTriggered) {
                     if (waves.get(currentWave).allEnemiesSpawned()) {
                         waves.get(currentWave).stopSpawning();
@@ -59,11 +67,17 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
                         }
                     }
                 }
+                if (currentWave >= waves.size() - 1) {
+                    if (waves.get(currentWave).allEnemiesSpawned()) {
+                        waves.get(currentWave).stopSpawning();
+                        if (waves.get(currentWave).allEnemiesKilled()) {
+                            setGameState(Gamestate.MAIN_MENU);
+                        }
+                    }
+                }
                 break;
             case QUIT_GAME:
                 System.exit(0);
-                break;
-            case PAUSE_GAME:
                 break;
         }
     }
@@ -72,22 +86,31 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         this.state = state;
         switch (state) {
             case MAIN_MENU:
+                clearView();
                 mainMenu = new Menu(this);
                 this.addGameObject(mainMenu);
                 break;
             case IN_GAME:
-                createObjects();
-                createWaves();
-                waveDelay = 2;
-                delayTriggered = true;
-                startDelay();
-                createFortress();
-                break;
-            case QUIT_GAME:
-                break;
-            case PAUSE_GAME:
+                clearView();
+                startGame();
                 break;
         }
+    }
+
+    private void clearView() {
+        this.deleteAllGameOBjects();
+        clearWaves();
+        initialized = false;
+    }
+
+    private void startGame() {
+        currentWave = -1;
+        createObjects();
+        createWaves();
+        startDelay();
+        createFortress();
+        delayTriggered = true;
+        initialized = true;
     }
 
     private void createObjects() {
@@ -99,20 +122,19 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         return worldBoundaries;
     }
 
-    public void createWaves() {
-        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
-        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
-        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
-        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
-        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+    private void createWaves() {
         waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
     }
 
-    public void createFortress() {
+    private void clearWaves() {
+        waves.clear();
+    }
+
+    private void createFortress() {
         fortress = new Fortress(this);
     }
 
-    public void startDelay() {
+    private void startDelay() {
         Alarm delay = new Alarm("Next wave", waveDelay);
         delay.addTarget(this);
         delay.start();

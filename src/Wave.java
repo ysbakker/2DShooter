@@ -3,6 +3,7 @@ import nl.han.ica.oopg.alarm.IAlarmListener;
 import nl.han.ica.oopg.objects.TextObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Wave implements IAlarmListener {
     private ShooterApp world;
@@ -36,8 +37,9 @@ public class Wave implements IAlarmListener {
     }
 
     public void stopSpawning() {
-        for(EnemySpawner es: spawners) {
-            es.stop();
+        Iterator<EnemySpawner> spawnersIterator = spawners.iterator();
+        while (spawnersIterator.hasNext()) {
+            spawnersIterator.next().stop();
         }
     }
 

@@ -74,4 +74,8 @@ public class Fortress extends GameObject implements ICollidableWithGameObjects, 
     public float getMaxHealth() {
         return maxHealth;
     }
+
+    public boolean isDestroyed() {
+        return currentHealth <= 0;
+    }
 }

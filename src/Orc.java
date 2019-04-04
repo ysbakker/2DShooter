@@ -5,9 +5,10 @@ public class Orc extends Enemy {
         super(world, new Sprite("media/sprite_orc.png"), 9);
 
         walkingSpeed = 1;
-        maxHealth = 50;
+        maxHealth = 100;
         currentHealth = maxHealth;
         walkingSpeed = world.random(walkingSpeed-0.3F, walkingSpeed+0.3F);
+        attackDamage = 1.5F;
         setxSpeed(-walkingSpeed);
     }
 
