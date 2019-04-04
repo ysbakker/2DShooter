@@ -4,7 +4,7 @@ public class Rock extends Weapon {
     public Rock(ShooterApp world, Player owner) {
         super(world, owner);
         autoFire = false;
-        fireDelay = 0.1;
+        fireDelay = 0.2;
         magSize = 0;
         particlefn = "media/sprite_rock.png";
         damage = 5;

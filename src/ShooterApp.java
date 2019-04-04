@@ -131,7 +131,7 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
         waves.add(new Wave(this, player, WeaponType.PISTOL, 2, 1, new Species[]{Species.SKELETON, Species.ORC}));
         waves.add(new Wave(this, player, WeaponType.PISTOL, 3, 1, new Species[]{Species.SKELETON, Species.ORC}));
         waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 1, new Species[]{Species.SKELETON, Species.ORC}));
-        waves.add(new Wave(this, player, WeaponType.PISTOL, 5, 2, new Species[]{Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 2, new Species[]{Species.ORC}));
         waves.add(new Wave(this, player, WeaponType.PISTOL, 3, 1, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL}));
         waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 1, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL}));
         waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL}));
@@ -163,6 +163,8 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
 
     public void triggerAlarm(String s) {
         currentWave++;
+        this.deleteAllGameObjectsOfType(Particle.class);
+        this.deleteAllGameObjectsOfType(Enemy.class);
         waves.get(currentWave).start(currentWave + 1);
         delayTriggered = false;
     }
