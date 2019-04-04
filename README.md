@@ -1,5 +1,17 @@
 # 2D Shooter - OOPD Eindproject
 
-Jochem Dobber, Yael Bakker, Yorrick Bakker | ITA 1DC
+2D Shooter is een indiegame van Jochem Dobber, Yael Bakker en Yorrick Bakker.
+Dit project is gemaakt in opdracht van Rein Harle en de Hogeschool van Arnhem en Nijmegen.
 
-Dit is een verandering
+### Technische Achtergrond
+Er is gebruik gemaakt van de OOPG game-engine die eigenlijk meer dient als een manier om te controleren of de ventilator in je laptop nog steeds naar behoren functioneert.
+Ook zullen er prestatieproblemen optreden wanneer er meer dan 2 objecten tegelijkertijd worden aangemaakt.
+Heb je nog een leuk idee, zoals het toevoegen van muziek? Wat leuk!
+Dit zorgt er wel voor dat de prestatie van het spel vergelijkbaar is met het spelen van Minecraft op een magnetron.
+Verder is de OOPG-engine ouderwets degelijk en redelijk makkelijk te gebruiken.
+
+### Over het spel
+Het is een top-down-side-scrolling-2d-shooter maar alleen omdat dat wel interessant klinkt.
+Er zijn verschillende typen vijanden en verschillende wapens, maar de grootste vijand is het gebruik van de ingebouwde `draw()`-functie.
+
+We hopen dat u veel plezier heeft met het spelen van het spel!
