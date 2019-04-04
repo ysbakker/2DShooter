@@ -9,8 +9,9 @@ public class EnemySpawner implements IAlarmListener {
     private ShooterApp world;
     private Species type;
     private int enemiesSpawned;
-    public Alarm spawnTimer;
+    private Alarm spawnTimer;
     private ArrayList<Enemy> enemies = new ArrayList<>();
+    private boolean isStopped = false;
 
     public EnemySpawner(ShooterApp world, float enemiesPerSecond, Species type){
         this.enemiesPerSecond = enemiesPerSecond;
@@ -42,7 +43,9 @@ public class EnemySpawner implements IAlarmListener {
         world.addGameObject(e, world.getWorldBoundaries()[2], world.random(world.getWorldBoundaries()[1], world.getWorldBoundaries()[3] - e.getHeight()));
         enemiesSpawned++;
         enemies.add(e);
-        startAlarm();
+        if(!isStopped) {
+            startAlarm();
+        }
     }
 
     public int getEnemiesSpawned() {
@@ -59,6 +62,6 @@ public class EnemySpawner implements IAlarmListener {
     }
 
     public void stop() {
-        spawnTimer.stop();
+        isStopped = true;
     }
 }
