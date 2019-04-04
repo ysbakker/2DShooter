@@ -12,15 +12,20 @@ public class Wave implements IAlarmListener {
     private Species[] species;
     private ArrayList<EnemySpawner> spawners = new ArrayList<>();
     private TextObject text;
+    private WeaponType weapon;
+    private Player player;
 
-    public Wave(ShooterApp world, int enemyCount, float enemiesPerSecond, Species[] species) {
+    public Wave(ShooterApp world, Player player, WeaponType weapon, int enemyCount, float enemiesPerSecond, Species[] species) {
         this.world = world;
         this.enemyCount = enemyCount;
         this.enemiesPerSecond = enemiesPerSecond;
         this.species = species;
+        this.weapon = weapon;
+        this.player = player;
     }
 
     public void start(int waveCount) {
+        player.setWeapon(weapon);
         text = new TextObject("Wave " + waveCount, 60);
         text.setX(world.getWidth());
         text.setY(world.getHeight()/2);

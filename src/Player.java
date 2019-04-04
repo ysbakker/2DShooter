@@ -28,7 +28,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         facingDirection[0] = 1;
         facingDirection[1] = 0;
 
-        currentWeapon = new Shotgun(world, this);
+        currentWeapon = new Rock(world, this);
         world.addGameObject(currentWeapon);
 
         // Gebruikte toetsen
@@ -166,7 +166,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         return false;
     }
 
-    public void loopFramesRight() {
+    private void loopFramesRight() {
         if(currentFrame >= 7) {
             currentFrame = 0;
         } else {
@@ -187,6 +187,26 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
     public int[] getFacingDirection() {
         return facingDirection;
+    }
+
+    public void setWeapon(WeaponType weapon) {
+        switch(weapon) {
+            case ROCK:
+                world.deleteGameObject(currentWeapon);
+                currentWeapon = new Rock(world, this);
+                world.addGameObject(currentWeapon);
+                break;
+            case PISTOL:
+                world.deleteGameObject(currentWeapon);
+                currentWeapon = new Pistol(world, this);
+                world.addGameObject(currentWeapon);
+                break;
+            case SHOTGUN:
+                world.deleteGameObject(currentWeapon);
+                currentWeapon = new Shotgun(world, this);
+                world.addGameObject(currentWeapon);
+                break;
+        }
     }
 
     @Override

@@ -123,7 +123,28 @@ public class ShooterApp extends GameEngine implements IAlarmListener {
     }
 
     private void createWaves() {
-        waves.add(new Wave(this, 10, 2, new Species[]{Species.SKELETON, Species.ORC, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.ROCK, 1, 1, new Species[]{Species.SKELETON}));
+        waves.add(new Wave(this, player, WeaponType.ROCK, 5, 1, new Species[]{Species.SKELETON}));
+        waves.add(new Wave(this, player, WeaponType.ROCK, 10, 1, new Species[]{Species.SKELETON}));
+        waves.add(new Wave(this, player, WeaponType.ROCK, 10, 2, new Species[]{Species.SKELETON}));
+        waves.add(new Wave(this, player, WeaponType.ROCK, 1, 1, new Species[]{Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 2, 1, new Species[]{Species.SKELETON, Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 3, 1, new Species[]{Species.SKELETON, Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 1, new Species[]{Species.SKELETON, Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 5, 2, new Species[]{Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 3, 1, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 1, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 4, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 6, 1.5F, new Species[]{Species.TROLL}));
+        waves.add(new Wave(this, player, WeaponType.PISTOL, 2, 1, new Species[]{Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 3, 1, new Species[]{Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 5, 1, new Species[]{Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 7, 2, new Species[]{Species.SKELETON_FLAME, Species.SKELETON}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 2, new Species[]{Species.ORC}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 3, new Species[]{Species.TROLL}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 7, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 2, new Species[]{Species.ORC, Species.SKELETON, Species.TROLL, Species.SKELETON_FLAME}));
+        waves.add(new Wave(this, player, WeaponType.SHOTGUN, 10, 10, new Species[]{Species.ORC}));
     }
 
     private void clearWaves() {
